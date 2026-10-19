@@ -29,4 +29,4 @@ inline bool ReadLocalPlayer(std::uintptr_t module_base, ReadMemory read, void* c
     result = snapshot;
     return true;
 }
-} // namespace LeagueSnapshot
+} // 命名空间 LeagueSnapshot

@@ -1,0 +1,2868 @@
+{
+  "schema_version": 1,
+  "validation_date": "2026-10-19（Asia/Shanghai）",
+  "upstream_commit": "817879782e6b783a6403f780d7c669e0c7bcd3de",
+  "sources": [
+    "CE MCP 批量复读",
+    "CE MCP 运行时字段快照",
+    "CE MCP 姓名特征扫描和反汇编",
+    "本地 Live Client Data API",
+    "已映射映像 PE 异常表/展开链"
+  ],
+  "batch_summary": {
+    "count": 93,
+    "code_matches": 93,
+    "code_mismatches": 0,
+    "note": "全局数据会随游戏状态变化；target_snapshot_changes 不等于代码或地址错误。",
+    "target_snapshot_changes": 6,
+    "target_snapshot_matches": 58
+  },
+  "target_snapshot_changes": [
+    "globals.UnderMouseObj",
+    "globals.GameTime",
+    "globals.r3dRenderer",
+    "globals.g_thread_device",
+    "globals.g_current_x3d_device_override",
+    "globals.g_x3d_d3d11_backend"
+  ],
+  "batch_interpretation": "93/93 处引用代码复读一致；64 个目标窗口58个相同、6个变化；37/37函数目标代码相同，6个变化均为运行时全局数据，不等价于定位失败。",
+  "checks": [
+    {
+      "id": "globals.LocalPlayer",
+      "group": "globals",
+      "match_rva": "0x2B1D66",
+      "match_address": "0x1402B1D66",
+      "expected_code48": "48 8B 05 73 9F C7 01 48 85 C0 74 09 0F B6 88 39 02 00 00 EB 07 0F B6 8E 39 02 00 00 48 8B 05 9F 74 C3 01 B2 01 8B 5C 88 20 48 8D 8E C0 02 00 00",
+      "actual_code48": "48 8B 05 73 9F C7 01 48 85 C0 74 09 0F B6 88 39 02 00 00 EB 07 0F B6 8E 39 02 00 00 48 8B 05 9F 74 C3 01 B2 01 8B 5C 88 20 48 8D 8E C0 02 00 00",
+      "code_matches": true,
+      "code_disasm": [
+        "1402B1D66 - 48 8B 05 739FC701  - mov rax,[141F2BCE0]",
+        "1402B1D6D - 48 85 C0  - test rax,rax",
+        "1402B1D70 - 74 09 - je 1402B1D7B",
+        "1402B1D72 - 0FB6 88 39020000  - movzx ecx,byte ptr [rax+00000239]",
+        "1402B1D79 - EB 07 - jmp 1402B1D82"
+      ],
+      "candidate_rva": "0x1F2BCE0",
+      "candidate_address": "0x141F2BCE0",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "678d6b7bae2a2fd32a403d9dc72c0e4860a0810dbc2bf1ab96bdcef42400ff64",
+      "actual_target_sha256": "678d6b7bae2a2fd32a403d9dc72c0e4860a0810dbc2bf1ab96bdcef42400ff64"
+    },
+    {
+      "id": "globals.HeroManager",
+      "group": "globals",
+      "match_rva": "0x1F14F7",
+      "match_address": "0x1401F14F7",
+      "expected_code48": "48 8B 05 72 7E CF 01 45 33 FF 49 89 73 08 0F 57 C0 F3 0F 7F 45 A0 4C 89 7D B0 48 8B FA 48 8B 70 08 4C 8B E9 8B 40 10 41 BE FF FF FF FF 4D 89 63",
+      "actual_code48": "48 8B 05 72 7E CF 01 45 33 FF 49 89 73 08 0F 57 C0 F3 0F 7F 45 A0 4C 89 7D B0 48 8B FA 48 8B 70 08 4C 8B E9 8B 40 10 41 BE FF FF FF FF 4D 89 63",
+      "code_matches": true,
+      "code_disasm": [
+        "1401F14F7 - 48 8B 05 727ECF01  - mov rax,[141EE9370]",
+        "1401F14FE - 45 33 FF  - xor r15d,r15d",
+        "1401F1501 - 49 89 73 08  - mov [r11+08],rsi",
+        "1401F1505 - 0F57 C0  - xorps xmm0,xmm0",
+        "1401F1508 - F3 0F7F 45 A0  - movdqu [rbp-60],xmm0"
+      ],
+      "candidate_rva": "0x1EE9370",
+      "candidate_address": "0x141EE9370",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "3499ae8bec3597b8b377d4bd680063e96f6f82a8526d53210f340a7b85d56dbf",
+      "actual_target_sha256": "3499ae8bec3597b8b377d4bd680063e96f6f82a8526d53210f340a7b85d56dbf"
+    },
+    {
+      "id": "globals.BlueMinionManager",
+      "group": "globals",
+      "match_rva": "0x21EDBB",
+      "match_address": "0x14021EDBB",
+      "expected_code48": "48 8B 0D 66 A6 CC 01 48 83 B8 C0 00 00 00 00 74 25 48 85 C9 75 05 48 85 D2 74 1B 48 85 D2 48 0F 45 CA 48 8B 01 FF 50 28 48 8B 0D 3E A6 CC 01 48",
+      "actual_code48": "48 8B 0D 66 A6 CC 01 48 83 B8 C0 00 00 00 00 74 25 48 85 C9 75 05 48 85 D2 74 1B 48 85 D2 48 0F 45 CA 48 8B 01 FF 50 28 48 8B 0D 3E A6 CC 01 48",
+      "code_matches": true,
+      "code_disasm": [
+        "14021EDBB - 48 8B 0D 66A6CC01  - mov rcx,[141EE9428]",
+        "14021EDC2 - 48 83 B8 C0000000 00 - cmp qword ptr [rax+000000C0],00",
+        "14021EDCA - 74 25 - je 14021EDF1",
+        "14021EDCC - 48 85 C9  - test rcx,rcx",
+        "14021EDCF - 75 05 - jne 14021EDD6"
+      ],
+      "candidate_rva": "0x1EE9428",
+      "candidate_address": "0x141EE9428",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "ea6d90685bac2c5eaab69a55b4e88e33f7748452c98f55dcd40028f30b510297",
+      "actual_target_sha256": "ea6d90685bac2c5eaab69a55b4e88e33f7748452c98f55dcd40028f30b510297"
+    },
+    {
+      "id": "globals.RedMinionManager",
+      "group": "globals",
+      "match_rva": "0x21EDB4",
+      "match_address": "0x14021EDB4",
+      "expected_code48": "48 8B 15 75 A6 CC 01 48 8B 0D 66 A6 CC 01 48 83 B8 C0 00 00 00 00 74 25 48 85 C9 75 05 48 85 D2 74 1B 48 85 D2 48 0F 45 CA 48 8B 01 FF 50 28 48",
+      "actual_code48": "48 8B 15 75 A6 CC 01 48 8B 0D 66 A6 CC 01 48 83 B8 C0 00 00 00 00 74 25 48 85 C9 75 05 48 85 D2 74 1B 48 85 D2 48 0F 45 CA 48 8B 01 FF 50 28 48",
+      "code_matches": true,
+      "code_disasm": [
+        "14021EDB4 - 48 8B 15 75A6CC01  - mov rdx,[141EE9430]",
+        "14021EDBB - 48 8B 0D 66A6CC01  - mov rcx,[141EE9428]",
+        "14021EDC2 - 48 83 B8 C0000000 00 - cmp qword ptr [rax+000000C0],00",
+        "14021EDCA - 74 25 - je 14021EDF1",
+        "14021EDCC - 48 85 C9  - test rcx,rcx"
+      ],
+      "candidate_rva": "0x1EE9430",
+      "candidate_address": "0x141EE9430",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "ccd6141c68699e70dcb747b0901e64b2cc8f84e7bc0bef43bee060674870cc77",
+      "actual_target_sha256": "ccd6141c68699e70dcb747b0901e64b2cc8f84e7bc0bef43bee060674870cc77"
+    },
+    {
+      "id": "globals.TurretManager",
+      "group": "globals",
+      "match_rva": "0x228ED3",
+      "match_address": "0x140228ED3",
+      "expected_code48": "48 8B 1D 9E 04 CC 01 48 8D 4C 24 70 48 89 6C 24 60 E8 67 BF 44 00 45 33 C9 33 D2 48 8B CB 44 0F B6 00 E8 66 9F 42 00 48 8B 1D 77 04 CC 01 48 8D",
+      "actual_code48": "48 8B 1D 9E 04 CC 01 48 8D 4C 24 70 48 89 6C 24 60 E8 67 BF 44 00 45 33 C9 33 D2 48 8B CB 44 0F B6 00 E8 66 9F 42 00 48 8B 1D 77 04 CC 01 48 8D",
+      "code_matches": true,
+      "code_disasm": [
+        "140228ED3 - 48 8B 1D 9E04CC01  - mov rbx,[141EE9378]",
+        "140228EDA - 48 8D 4C 24 70  - lea rcx,[rsp+70]",
+        "140228EDF - 48 89 6C 24 60  - mov [rsp+60],rbp",
+        "140228EE4 - E8 67BF4400 - call 140674E50",
+        "140228EE9 - 45 33 C9  - xor r9d,r9d"
+      ],
+      "candidate_rva": "0x1EE9378",
+      "candidate_address": "0x141EE9378",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "7281462f2782b158947413be25ae0cbabf941266ce05026cb41b1bec68e2f481",
+      "actual_target_sha256": "7281462f2782b158947413be25ae0cbabf941266ce05026cb41b1bec68e2f481"
+    },
+    {
+      "id": "globals.ViewPort",
+      "group": "globals",
+      "match_rva": "0x290E75",
+      "match_address": "0x140290E75",
+      "expected_code48": "48 8B 3D 5C B9 C5 01 FF 90 20 01 00 00 45 0F 57 FF 48 85 C0 74 25 48 8B 06 48 8B CE FF 90 20 01 00 00 48 8B C8 E8 B1 0B 45 00 48 8B 08 48 8B 51",
+      "actual_code48": "48 8B 3D 5C B9 C5 01 FF 90 20 01 00 00 45 0F 57 FF 48 85 C0 74 25 48 8B 06 48 8B CE FF 90 20 01 00 00 48 8B C8 E8 B1 0B 45 00 48 8B 08 48 8B 51",
+      "code_matches": true,
+      "code_disasm": [
+        "140290E75 - 48 8B 3D 5CB9C501  - mov rdi,[141EEC7D8]",
+        "140290E7C - FF 90 20010000  - call qword ptr [rax+00000120]",
+        "140290E82 - 45 0F57 FF  - xorps xmm15,xmm15",
+        "140290E86 - 48 85 C0  - test rax,rax",
+        "140290E89 - 74 25 - je 140290EB0"
+      ],
+      "candidate_rva": "0x1EEC7D8",
+      "candidate_address": "0x141EEC7D8",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "183bf375a50848be8f4f2f0bddad3508b0f10549799fe186adc71f8222f8c58b",
+      "actual_target_sha256": "183bf375a50848be8f4f2f0bddad3508b0f10549799fe186adc71f8222f8c58b"
+    },
+    {
+      "id": "globals.UnderMouseObj",
+      "group": "globals",
+      "match_rva": "0x270720",
+      "match_address": "0x140270720",
+      "expected_code48": "48 89 0D F1 C2 C7 01 48 8D 05 42 99 7B 01 48 89 01 33 D2 48 89 51 08 48 89 51 10 48 89 51 18 F2 0F 10 05 A1 EB D1 01 F2 0F 11 41 20 8B 05 9E EB",
+      "actual_code48": "48 89 0D F1 C2 C7 01 48 8D 05 42 99 7B 01 48 89 01 33 D2 48 89 51 08 48 89 51 10 48 89 51 18 F2 0F 10 05 A1 EB D1 01 F2 0F 11 41 20 8B 05 9E EB",
+      "code_matches": true,
+      "code_disasm": [
+        "140270720 - 48 89 0D F1C2C701  - mov [141EECA18],rcx",
+        "140270727 - 48 8D 05 42997B01  - lea rax,[141A2A070]",
+        "14027072E - 48 89 01  - mov [rcx],rax",
+        "140270731 - 33 D2  - xor edx,edx",
+        "140270733 - 48 89 51 08  - mov [rcx+08],rdx"
+      ],
+      "candidate_rva": "0x1EECA18",
+      "candidate_address": "0x141EECA18",
+      "candidate_is_code": false,
+      "target_snapshot_matches": false,
+      "expected_target_sha256": "98983ba44f3412f5d6bc585a1bdfaa2b6cf905f3b06c3c5f45d4f761ba2a64e5",
+      "actual_target_sha256": "610f5b71d657cc63adcd0d386c4fa02c95324fc37ebd39f516c593a0992a99e6"
+    },
+    {
+      "id": "globals.GameTime",
+      "group": "globals",
+      "match_rva": "0x3A8C1C",
+      "match_address": "0x1403A8C1C",
+      "expected_code48": "F3 0F 5C 35 64 1B B5 01 0F 28 F8 0F 2F CE 76 05 F3 0F 10 73 78 0F 28 CE 48 8B CB E8 D4 0D 00 00 0F 28 CE 48 8B CB E8 79 06 00 00 C6 43 30 00 48",
+      "actual_code48": "F3 0F 5C 35 64 1B B5 01 0F 28 F8 0F 2F CE 76 05 F3 0F 10 73 78 0F 28 CE 48 8B CB E8 D4 0D 00 00 0F 28 CE 48 8B CB E8 79 06 00 00 C6 43 30 00 48",
+      "code_matches": true,
+      "code_disasm": [
+        "1403A8C1C - F3 0F5C 35 641BB501  - subss xmm6,[141EFA788]",
+        "1403A8C24 - 0F28 F8  - movaps xmm7,xmm0",
+        "1403A8C27 - 0F2F CE  - comiss xmm1,xmm6",
+        "1403A8C2A - 76 05 - jna 1403A8C31",
+        "1403A8C2C - F3 0F10 73 78  - movss xmm6,[rbx+78]"
+      ],
+      "candidate_rva": "0x1EFA788",
+      "candidate_address": "0x141EFA788",
+      "candidate_is_code": false,
+      "target_snapshot_matches": false,
+      "expected_target_sha256": "231e631e16ac838d975d5f14dc529edfc2100e83eaed7e6ffdfb4564de382535",
+      "actual_target_sha256": "eb6b03fc04abdd6293f5991d00c41191883ee0b9fa6f704022474fd21aef5f8b"
+    },
+    {
+      "id": "globals.MissileManager",
+      "group": "globals",
+      "match_rva": "0x28923E",
+      "match_address": "0x14028923E",
+      "expected_code48": "48 8B 05 5B 00 C6 01 41 8B 5E 20 48 8B 78 08 8B 40 10 48 8D 2C C7 48 3B FD 74 37 0F 1F 80 00 00 00 00 48 8B 37 39 9E 08 42 00 00 75 1C 48 8D 8E",
+      "actual_code48": "48 8B 05 5B 00 C6 01 41 8B 5E 20 48 8B 78 08 8B 40 10 48 8D 2C C7 48 3B FD 74 37 0F 1F 80 00 00 00 00 48 8B 37 39 9E 08 42 00 00 75 1C 48 8D 8E",
+      "code_matches": true,
+      "code_disasm": [
+        "14028923E - 48 8B 05 5B00C601  - mov rax,[141EE92A0]",
+        "140289245 - 41 8B 5E 20  - mov ebx,[r14+20]",
+        "140289249 - 48 8B 78 08  - mov rdi,[rax+08]",
+        "14028924D - 8B 40 10  - mov eax,[rax+10]",
+        "140289250 - 48 8D 2C C7   - lea rbp,[rdi+rax*8]"
+      ],
+      "candidate_rva": "0x1EE92A0",
+      "candidate_address": "0x141EE92A0",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "90bd55f05e0224704d1f8c95a7f508faf593d685f78c8b6f0262696a47c1b389",
+      "actual_target_sha256": "90bd55f05e0224704d1f8c95a7f508faf593d685f78c8b6f0262696a47c1b389"
+    },
+    {
+      "id": "globals.MissileContainer",
+      "group": "globals",
+      "match_rva": "0x53ABF0",
+      "match_address": "0x14053ABF0",
+      "expected_code48": "48 8B 0D F9 75 9E 01 48 8D 44 24 50 F3 44 0F 11 44 24 48 4C 8D 4C 24 78 F3 0F 11 7C 24 40 4C 8D 44 24 60 44 89 7C 24 38 48 83 C1 08 44 88 64 24",
+      "actual_code48": "48 8B 0D F9 75 9E 01 48 8D 44 24 50 F3 44 0F 11 44 24 48 4C 8D 4C 24 78 F3 0F 11 7C 24 40 4C 8D 44 24 60 44 89 7C 24 38 48 83 C1 08 44 88 64 24",
+      "code_matches": true,
+      "code_disasm": [
+        "14053ABF0 - 48 8B 0D F9759E01  - mov rcx,[141F221F0]",
+        "14053ABF7 - 48 8D 44 24 50  - lea rax,[rsp+50]",
+        "14053ABFC - F3 44 0F11 44 24 48  - movss [rsp+48],xmm8",
+        "14053AC03 - 4C 8D 4C 24 78  - lea r9,[rsp+78]",
+        "14053AC08 - F3 0F11 7C 24 40  - movss [rsp+40],xmm7"
+      ],
+      "candidate_rva": "0x1F221F0",
+      "candidate_address": "0x141F221F0",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "77011f41f03059106571f7d9ae614a026750475f696823e057de4d3136a8bd4e",
+      "actual_target_sha256": "77011f41f03059106571f7d9ae614a026750475f696823e057de4d3136a8bd4e"
+    },
+    {
+      "id": "globals.HudInstance",
+      "group": "globals",
+      "match_rva": "0x245E99",
+      "match_address": "0x140245E99",
+      "expected_code48": "48 8B 0D 40 35 CA 01 8B 57 20 48 8B 49 28 E8 84 A9 92 00 B0 01 48 8B 5C 24 58 48 8B 74 24 60 48 83 C4 40 5F C3 48 8B 5C 24 58 48 8B 74 24 60 48",
+      "actual_code48": "48 8B 0D 40 35 CA 01 8B 57 20 48 8B 49 28 E8 84 A9 92 00 B0 01 48 8B 5C 24 58 48 8B 74 24 60 48 83 C4 40 5F C3 48 8B 5C 24 58 48 8B 74 24 60 48",
+      "code_matches": true,
+      "code_disasm": [
+        "140245E99 - 48 8B 0D 4035CA01  - mov rcx,[141EE93E0]",
+        "140245EA0 - 8B 57 20  - mov edx,[rdi+20]",
+        "140245EA3 - 48 8B 49 28  - mov rcx,[rcx+28]",
+        "140245EA7 - E8 84A99200 - call 140B70830",
+        "140245EAC - B0 01 - mov al,01"
+      ],
+      "candidate_rva": "0x1EE93E0",
+      "candidate_address": "0x141EE93E0",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "6b937930735fa1a6ca8c480d2ec21adad8b52c95071c23c5601e1f5395a896a8",
+      "actual_target_sha256": "6b937930735fa1a6ca8c480d2ec21adad8b52c95071c23c5601e1f5395a896a8"
+    },
+    {
+      "id": "globals.ChatManager",
+      "group": "globals",
+      "match_rva": "0x3D41DD",
+      "match_address": "0x1403D41DD",
+      "expected_code48": "48 8B 0D 54 D9 B2 01 48 8B D8 48 85 C9 74 0D E8 DF C9 71 00 84 C0 0F 85 CA 00 00 00 48 8B 0D 40 D9 B2 01 48 85 C9 74 0D E8 C6 91 FA 00 84 C0 0F",
+      "actual_code48": "48 8B 0D 54 D9 B2 01 48 8B D8 48 85 C9 74 0D E8 DF C9 71 00 84 C0 0F 85 CA 00 00 00 48 8B 0D 40 D9 B2 01 48 85 C9 74 0D E8 C6 91 FA 00 84 C0 0F",
+      "code_matches": true,
+      "code_disasm": [
+        "1403D41DD - 48 8B 0D 54D9B201  - mov rcx,[141F01B38]",
+        "1403D41E4 - 48 8B D8  - mov rbx,rax",
+        "1403D41E7 - 48 85 C9  - test rcx,rcx",
+        "1403D41EA - 74 0D - je 1403D41F9",
+        "1403D41EC - E8 DFC97100 - call 140AF0BD0"
+      ],
+      "candidate_rva": "0x1F01B38",
+      "candidate_address": "0x141F01B38",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "efe06766707313363b1ba7f602ccc12ce910a1dad872f4efe04414a96b824681",
+      "actual_target_sha256": "efe06766707313363b1ba7f602ccc12ce910a1dad872f4efe04414a96b824681"
+    },
+    {
+      "id": "globals.ChatClient",
+      "group": "globals",
+      "match_rva": "0x59424D",
+      "match_address": "0x14059424D",
+      "expected_code48": "48 8B 0D 04 38 99 01 48 85 C9 74 0E 48 8B 01 FF 50 78 84 C0 74 04 C6 43 09 01 48 83 C4 20 5B C3 CC CC CC 40 53 48 83 EC 20 C6 41 09 00 48 8B D9",
+      "actual_code48": "48 8B 0D 04 38 99 01 48 85 C9 74 0E 48 8B 01 FF 50 78 84 C0 74 04 C6 43 09 01 48 83 C4 20 5B C3 CC CC CC 40 53 48 83 EC 20 C6 41 09 00 48 8B D9",
+      "code_matches": true,
+      "code_disasm": [
+        "14059424D - 48 8B 0D 04389901  - mov rcx,[141F27A58]",
+        "140594254 - 48 85 C9  - test rcx,rcx",
+        "140594257 - 74 0E - je 140594267",
+        "140594259 - 48 8B 01  - mov rax,[rcx]",
+        "14059425C - FF 50 78  - call qword ptr [rax+78]"
+      ],
+      "candidate_rva": "0x1F27A58",
+      "candidate_address": "0x141F27A58",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "65ffb4eb9bdbd4eadb758fb0b8dde30ffe786c978f27be633beeecc7f109fd19",
+      "actual_target_sha256": "65ffb4eb9bdbd4eadb758fb0b8dde30ffe786c978f27be633beeecc7f109fd19"
+    },
+    {
+      "id": "globals.NavGrid",
+      "group": "globals",
+      "match_rva": "0x2B4697",
+      "match_address": "0x1402B4697",
+      "expected_code48": "48 8B 05 B2 80 C3 01 48 89 84 11 E8 02 00 00 49 8B CE 49 8B 06 FF 90 30 01 00 00 33 DB 4C 89 B5 48 01 00 00 48 8D 05 AE A6 77 01 48 89 9D 38 02",
+      "actual_code48": "48 8B 05 B2 80 C3 01 48 89 84 11 E8 02 00 00 49 8B CE 49 8B 06 FF 90 30 01 00 00 33 DB 4C 89 B5 48 01 00 00 48 8D 05 AE A6 77 01 48 89 9D 38 02",
+      "code_matches": true,
+      "code_disasm": [
+        "1402B4697 - 48 8B 05 B280C301  - mov rax,[141EEC750]",
+        "1402B469E - 48 89 84 11 E8020000  - mov [rcx+rdx+000002E8],rax",
+        "1402B46A6 - 49 8B CE  - mov rcx,r14",
+        "1402B46A9 - 49 8B 06  - mov rax,[r14]",
+        "1402B46AC - FF 90 30010000  - call qword ptr [rax+00000130]"
+      ],
+      "candidate_rva": "0x1EEC750",
+      "candidate_address": "0x141EEC750",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "585e40a419f92776b5e4475188e38ede6cd0124ef66b2a3ac5680659d7123c96",
+      "actual_target_sha256": "585e40a419f92776b5e4475188e38ede6cd0124ef66b2a3ac5680659d7123c96"
+    },
+    {
+      "id": "globals.NetClient",
+      "group": "globals",
+      "match_rva": "0x21CD40",
+      "match_address": "0x14021CD40",
+      "expected_code48": "48 8B 05 19 C5 CC 01 0F B6 15 E6 43 D1 01 48 85 C0 41 0F 95 C1 48 85 C0 74 0A 44 0F B6 80 1B 04 00 00 EB 04 44 0F B6 C2 44 3A C2 0F 84 88 01 00",
+      "actual_code48": "48 8B 05 19 C5 CC 01 0F B6 15 E6 43 D1 01 48 85 C0 41 0F 95 C1 48 85 C0 74 0A 44 0F B6 80 1B 04 00 00 EB 04 44 0F B6 C2 44 3A C2 0F 84 88 01 00",
+      "code_matches": true,
+      "code_disasm": [
+        "14021CD40 - 48 8B 05 19C5CC01  - mov rax,[141EE9260]",
+        "14021CD47 - 0FB6 15 E643D101  - movzx edx,byte ptr [141F31134]",
+        "14021CD4E - 48 85 C0  - test rax,rax",
+        "14021CD51 - 41 0F95 C1  - setne r9b",
+        "14021CD55 - 48 85 C0  - test rax,rax"
+      ],
+      "candidate_rva": "0x1EE9260",
+      "candidate_address": "0x141EE9260",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "3d9f2b80ddd5be65b73d5f8caf088b66023ce515e9d6ad29e9799011dc3fdeb0",
+      "actual_target_sha256": "3d9f2b80ddd5be65b73d5f8caf088b66023ce515e9d6ad29e9799011dc3fdeb0"
+    },
+    {
+      "id": "globals.NetInstance",
+      "group": "globals",
+      "match_rva": "0x2245ED",
+      "match_address": "0x1402245ED",
+      "expected_code48": "48 8B 0D 5C 4C CC 01 8B 5B 08 E8 34 B1 3A 00 48 85 C0 74 1A 48 8D 48 18 8B D3 48 8B 01 FF 50 08 48 85 C0 74 09 8B 40 18 48 83 C4 20 5B C3 B8 04",
+      "actual_code48": "48 8B 0D 5C 4C CC 01 8B 5B 08 E8 34 B1 3A 00 48 85 C0 74 1A 48 8D 48 18 8B D3 48 8B 01 FF 50 08 48 85 C0 74 09 8B 40 18 48 83 C4 20 5B C3 B8 04",
+      "code_matches": true,
+      "code_disasm": [
+        "1402245ED - 48 8B 0D 5C4CCC01  - mov rcx,[141EE9250]",
+        "1402245F4 - 8B 5B 08  - mov ebx,[rbx+08]",
+        "1402245F7 - E8 34B13A00 - call 1405CF730",
+        "1402245FC - 48 85 C0  - test rax,rax",
+        "1402245FF - 74 1A - je 14022461B"
+      ],
+      "candidate_rva": "0x1EE9250",
+      "candidate_address": "0x141EE9250",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "fc5c6f7aee48bbb3963c3e93fba0ab09026cf0de47802cac364401f8641f455e",
+      "actual_target_sha256": "fc5c6f7aee48bbb3963c3e93fba0ab09026cf0de47802cac364401f8641f455e"
+    },
+    {
+      "id": "globals.EntityList",
+      "group": "globals",
+      "match_rva": "0x241415",
+      "match_address": "0x140241415",
+      "expected_code48": "48 8B 05 DC 7F CA 01 48 69 D1 D8 01 00 00 8B B4 02 A0 00 00 00 83 FE 05 73 43 48 81 C3 88 02 00 00 48 8D 54 24 70 48 8B CB 48 8B 03 FF 50 20 4C",
+      "actual_code48": "48 8B 05 DC 7F CA 01 48 69 D1 D8 01 00 00 8B B4 02 A0 00 00 00 83 FE 05 73 43 48 81 C3 88 02 00 00 48 8D 54 24 70 48 8B CB 48 8B 03 FF 50 20 4C",
+      "code_matches": true,
+      "code_disasm": [
+        "140241415 - 48 8B 05 DC7FCA01  - mov rax,[141EE93F8]",
+        "14024141C - 48 69 D1 D8010000 - imul rdx,rcx,000001D8",
+        "140241423 - 8B B4 02 A0000000  - mov esi,[rdx+rax+000000A0]",
+        "14024142A - 83 FE 05 - cmp esi,05",
+        "14024142D - 73 43 - jae 140241472"
+      ],
+      "candidate_rva": "0x1EE93F8",
+      "candidate_address": "0x141EE93F8",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "43caad9ed24d1994e8dd57b4d8e52dad621ded86821cad77b15e51a08f4a8916",
+      "actual_target_sha256": "43caad9ed24d1994e8dd57b4d8e52dad621ded86821cad77b15e51a08f4a8916"
+    },
+    {
+      "id": "globals.GameClient",
+      "group": "globals",
+      "match_rva": "0x452CA6",
+      "match_address": "0x140452CA6",
+      "expected_code48": "48 8B 05 5B 58 AB 01 48 8B E9 83 78 10 02 0F 85 BC 00 00 00 80 B9 E0 01 00 00 00 0F 85 AF 00 00 00 48 8B 0D 62 65 A9 01 48 89 74 24 48 4C 89 74",
+      "actual_code48": "48 8B 05 5B 58 AB 01 48 8B E9 83 78 10 02 0F 85 BC 00 00 00 80 B9 E0 01 00 00 00 0F 85 AF 00 00 00 48 8B 0D 62 65 A9 01 48 89 74 24 48 4C 89 74",
+      "code_matches": true,
+      "code_disasm": [
+        "140452CA6 - 48 8B 05 5B58AB01  - mov rax,[141F08508]",
+        "140452CAD - 48 8B E9  - mov rbp,rcx",
+        "140452CB0 - 83 78 10 02 - cmp dword ptr [rax+10],02",
+        "140452CB4 - 0F85 BC000000 - jne 140452D76",
+        "140452CBA - 80 B9 E0010000 00 - cmp byte ptr [rcx+000001E0],00"
+      ],
+      "candidate_rva": "0x1F08508",
+      "candidate_address": "0x141F08508",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "6ff73bfc2ef8465f06a9f312e3e6d9109602adf3ad403097c1304fff37cfcf24",
+      "actual_target_sha256": "6ff73bfc2ef8465f06a9f312e3e6d9109602adf3ad403097c1304fff37cfcf24"
+    },
+    {
+      "id": "globals.SwapChain",
+      "group": "globals",
+      "match_rva": "0x110173E",
+      "match_address": "0x14110173E",
+      "expected_code48": "48 8B 05 8B DB E8 00 48 85 C0 0F 84 54 01 00 00 48 8B 05 7B DB E8 00 80 78 18 00 0F 85 43 01 00 00 48 8B 05 6A DB E8 00 3B 58 1C 0F 82 33 01 00",
+      "actual_code48": "48 8B 05 8B DB E8 00 48 85 C0 0F 84 54 01 00 00 48 8B 05 7B DB E8 00 80 78 18 00 0F 85 43 01 00 00 48 8B 05 6A DB E8 00 3B 58 1C 0F 82 33 01 00",
+      "code_matches": true,
+      "code_disasm": [
+        "14110173E - 48 8B 05 8BDBE800  - mov rax,[141F8F2D0]",
+        "141101745 - 48 85 C0  - test rax,rax",
+        "141101748 - 0F84 54010000 - je 1411018A2",
+        "14110174E - 48 8B 05 7BDBE800  - mov rax,[141F8F2D0]",
+        "141101755 - 80 78 18 00 - cmp byte ptr [rax+18],00"
+      ],
+      "candidate_rva": "0x1F8F2D0",
+      "candidate_address": "0x141F8F2D0",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "cfb64b244587da74d60276795e269ce0321de3b97bacb71d5745a73ef4d38fca",
+      "actual_target_sha256": "cfb64b244587da74d60276795e269ce0321de3b97bacb71d5745a73ef4d38fca"
+    },
+    {
+      "id": "globals.r3dRenderLayer",
+      "group": "globals",
+      "match_rva": "0x13A0CD7",
+      "match_address": "0x1413A0CD7",
+      "expected_code48": "48 C7 05 EE F1 C2 00 00 00 00 00 48 8D 4B 08 48 89 03 E8 02 F1 D9 FF 40 F6 C7 01 74 0D BA B8 00 00 00 48 8B CB E8 7F E6 D8 FF 48 8B C3 48 8B 5C",
+      "actual_code48": "48 C7 05 EE F1 C2 00 00 00 00 00 48 8D 4B 08 48 89 03 E8 02 F1 D9 FF 40 F6 C7 01 74 0D BA B8 00 00 00 48 8B CB E8 7F E6 D8 FF 48 8B C3 48 8B 5C",
+      "code_matches": true,
+      "code_disasm": [
+        "1413A0CD7 - 48 C7 05 EEF1C200 00000000 - mov qword ptr [141FCFED0],00000000",
+        "1413A0CE2 - 48 8D 4B 08  - lea rcx,[rbx+08]",
+        "1413A0CE6 - 48 89 03  - mov [rbx],rax",
+        "1413A0CE9 - E8 02F1D9FF - call 14113FDF0",
+        "1413A0CEE - 40 F6 C7 01 - test dil,01"
+      ],
+      "candidate_rva": "0x1FCFED0",
+      "candidate_address": "0x141FCFED0",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "5b2aedc2ee067455274d242311fe5cfcc5d120d7140914088638ee79afce311a",
+      "actual_target_sha256": "5b2aedc2ee067455274d242311fe5cfcc5d120d7140914088638ee79afce311a"
+    },
+    {
+      "id": "globals.r3dRenderer",
+      "group": "globals",
+      "match_rva": "0x139ECE6",
+      "match_address": "0x14139ECE6",
+      "expected_code48": "48 8B 0D EB 11 C3 00 8B FA 48 8B 01 FF 50 28 44 0F B6 C3 48 C7 44 24 20 00 00 00 00 8B D7 48 8B C8 4C 8B 08 4D 8B 91 D0 00 00 00 41 B1 03 41 FF",
+      "actual_code48": "48 8B 0D EB 11 C3 00 8B FA 48 8B 01 FF 50 28 44 0F B6 C3 48 C7 44 24 20 00 00 00 00 8B D7 48 8B C8 4C 8B 08 4D 8B 91 D0 00 00 00 41 B1 03 41 FF",
+      "code_matches": true,
+      "code_disasm": [
+        "14139ECE6 - 48 8B 0D EB11C300  - mov rcx,[141FCFED8]",
+        "14139ECED - 8B FA  - mov edi,edx",
+        "14139ECEF - 48 8B 01  - mov rax,[rcx]",
+        "14139ECF2 - FF 50 28  - call qword ptr [rax+28]",
+        "14139ECF5 - 44 0FB6 C3  - movzx r8d,bl"
+      ],
+      "candidate_rva": "0x1FCFED8",
+      "candidate_address": "0x141FCFED8",
+      "candidate_is_code": false,
+      "target_snapshot_matches": false,
+      "expected_target_sha256": "f728fbab60eab5afe48eca2d6df8786fe0a83b95e3154b7713404b1f7f2845e0",
+      "actual_target_sha256": "9ea83a7b0cd4b08c7f8a8a1cce353285efcb39ba9b5ffb191fd1e76d1c207a3f"
+    },
+    {
+      "id": "globals.g_thread_device",
+      "group": "globals",
+      "match_rva": "0x139D9A9",
+      "match_address": "0x14139D9A9",
+      "expected_code48": "48 8B 35 48 25 C3 00 48 8D 54 24 20 83 C0 0F 45 33 C0 83 E0 F0 48 8B 8E E0 01 00 00 89 44 24 20 C7 44 24 24 02 00 00 00 C7 44 24 28 04 00 00 00",
+      "actual_code48": "48 8B 35 48 25 C3 00 48 8D 54 24 20 83 C0 0F 45 33 C0 83 E0 F0 48 8B 8E E0 01 00 00 89 44 24 20 C7 44 24 24 02 00 00 00 C7 44 24 28 04 00 00 00",
+      "code_matches": true,
+      "code_disasm": [
+        "14139D9A9 - 48 8B 35 4825C300  - mov rsi,[141FCFEF8]",
+        "14139D9B0 - 48 8D 54 24 20  - lea rdx,[rsp+20]",
+        "14139D9B5 - 83 C0 0F - add eax,0F",
+        "14139D9B8 - 45 33 C0  - xor r8d,r8d",
+        "14139D9BB - 83 E0 F0 - and eax,-10"
+      ],
+      "candidate_rva": "0x1FCFEF8",
+      "candidate_address": "0x141FCFEF8",
+      "candidate_is_code": false,
+      "target_snapshot_matches": false,
+      "expected_target_sha256": "c25ce5f3cf42ce77dcff9c4e7375c250822212a74637f5419e8d8e955b19d108",
+      "actual_target_sha256": "b79c1550fafaf0f94a2f1d8263dc583397a8b018db2eb47723693ddf2e10a7a8"
+    },
+    {
+      "id": "globals.g_current_x3d_device_override",
+      "group": "globals",
+      "match_rva": "0x139D9A9",
+      "match_address": "0x14139D9A9",
+      "expected_code48": "48 8B 35 48 25 C3 00 48 8D 54 24 20 83 C0 0F 45 33 C0 83 E0 F0 48 8B 8E E0 01 00 00 89 44 24 20 C7 44 24 24 02 00 00 00 C7 44 24 28 04 00 00 00",
+      "actual_code48": "48 8B 35 48 25 C3 00 48 8D 54 24 20 83 C0 0F 45 33 C0 83 E0 F0 48 8B 8E E0 01 00 00 89 44 24 20 C7 44 24 24 02 00 00 00 C7 44 24 28 04 00 00 00",
+      "code_matches": true,
+      "code_disasm": [
+        "14139D9A9 - 48 8B 35 4825C300  - mov rsi,[141FCFEF8]",
+        "14139D9B0 - 48 8D 54 24 20  - lea rdx,[rsp+20]",
+        "14139D9B5 - 83 C0 0F - add eax,0F",
+        "14139D9B8 - 45 33 C0  - xor r8d,r8d",
+        "14139D9BB - 83 E0 F0 - and eax,-10"
+      ],
+      "candidate_rva": "0x1FCFEF8",
+      "candidate_address": "0x141FCFEF8",
+      "candidate_is_code": false,
+      "target_snapshot_matches": false,
+      "expected_target_sha256": "c25ce5f3cf42ce77dcff9c4e7375c250822212a74637f5419e8d8e955b19d108",
+      "actual_target_sha256": "b79c1550fafaf0f94a2f1d8263dc583397a8b018db2eb47723693ddf2e10a7a8"
+    },
+    {
+      "id": "globals.g_x3d_d3d11_backend",
+      "group": "globals",
+      "match_rva": "0x139D9A9",
+      "match_address": "0x14139D9A9",
+      "expected_code48": "48 8B 35 48 25 C3 00 48 8D 54 24 20 83 C0 0F 45 33 C0 83 E0 F0 48 8B 8E E0 01 00 00 89 44 24 20 C7 44 24 24 02 00 00 00 C7 44 24 28 04 00 00 00",
+      "actual_code48": "48 8B 35 48 25 C3 00 48 8D 54 24 20 83 C0 0F 45 33 C0 83 E0 F0 48 8B 8E E0 01 00 00 89 44 24 20 C7 44 24 24 02 00 00 00 C7 44 24 28 04 00 00 00",
+      "code_matches": true,
+      "code_disasm": [
+        "14139D9A9 - 48 8B 35 4825C300  - mov rsi,[141FCFEF8]",
+        "14139D9B0 - 48 8D 54 24 20  - lea rdx,[rsp+20]",
+        "14139D9B5 - 83 C0 0F - add eax,0F",
+        "14139D9B8 - 45 33 C0  - xor r8d,r8d",
+        "14139D9BB - 83 E0 F0 - and eax,-10"
+      ],
+      "candidate_rva": "0x1FCFEF8",
+      "candidate_address": "0x141FCFEF8",
+      "candidate_is_code": false,
+      "target_snapshot_matches": false,
+      "expected_target_sha256": "c25ce5f3cf42ce77dcff9c4e7375c250822212a74637f5419e8d8e955b19d108",
+      "actual_target_sha256": "b79c1550fafaf0f94a2f1d8263dc583397a8b018db2eb47723693ddf2e10a7a8"
+    },
+    {
+      "id": "globals.g_d3dcompiler47_module",
+      "group": "globals",
+      "match_rva": "0x139DE53",
+      "match_address": "0x14139DE53",
+      "expected_code48": "48 89 05 9E 28 C3 00 48 85 C0 75 26 FF 15 B3 96 66 00 4C 8D 05 0C 59 7A 00 BA 01 00 00 00 44 8B C8 B9 03 00 00 00 E8 32 F0 E9 FE 48 8B 05 73 28",
+      "actual_code48": "48 89 05 9E 28 C3 00 48 85 C0 75 26 FF 15 B3 96 66 00 4C 8D 05 0C 59 7A 00 BA 01 00 00 00 44 8B C8 B9 03 00 00 00 E8 32 F0 E9 FE 48 8B 05 73 28",
+      "code_matches": true,
+      "code_disasm": [
+        "14139DE53 - 48 89 05 9E28C300  - mov [141FD06F8],rax",
+        "14139DE5A - 48 85 C0  - test rax,rax",
+        "14139DE5D - 75 26 - jne 14139DE85",
+        "14139DE5F - FF 15 B3966600  - call qword ptr [141A07518]",
+        "14139DE65 - 4C 8D 05 0C597A00  - lea r8,[141B43778]"
+      ],
+      "candidate_rva": "0x1FD06F8",
+      "candidate_address": "0x141FD06F8",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "1e91d6c2bd23e711a141804aa34a1c3beaff9849d76bb5edde03d69f2fa0ae2a",
+      "actual_target_sha256": "1e91d6c2bd23e711a141804aa34a1c3beaff9849d76bb5edde03d69f2fa0ae2a"
+    },
+    {
+      "id": "globals.ViewMatrixInstance",
+      "group": "globals",
+      "match_rva": "0x290E75",
+      "match_address": "0x140290E75",
+      "expected_code48": "48 8B 3D 5C B9 C5 01 FF 90 20 01 00 00 45 0F 57 FF 48 85 C0 74 25 48 8B 06 48 8B CE FF 90 20 01 00 00 48 8B C8 E8 B1 0B 45 00 48 8B 08 48 8B 51",
+      "actual_code48": "48 8B 3D 5C B9 C5 01 FF 90 20 01 00 00 45 0F 57 FF 48 85 C0 74 25 48 8B 06 48 8B CE FF 90 20 01 00 00 48 8B C8 E8 B1 0B 45 00 48 8B 08 48 8B 51",
+      "code_matches": true,
+      "code_disasm": [
+        "140290E75 - 48 8B 3D 5CB9C501  - mov rdi,[141EEC7D8]",
+        "140290E7C - FF 90 20010000  - call qword ptr [rax+00000120]",
+        "140290E82 - 45 0F57 FF  - xorps xmm15,xmm15",
+        "140290E86 - 48 85 C0  - test rax,rax",
+        "140290E89 - 74 25 - je 140290EB0"
+      ],
+      "candidate_rva": "0x1EEC7D8",
+      "candidate_address": "0x141EEC7D8",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "183bf375a50848be8f4f2f0bddad3508b0f10549799fe186adc71f8222f8c58b",
+      "actual_target_sha256": "183bf375a50848be8f4f2f0bddad3508b0f10549799fe186adc71f8222f8c58b"
+    },
+    {
+      "id": "globals.ConnSlotSentinel",
+      "group": "globals",
+      "match_rva": "0x21CD47",
+      "match_address": "0x14021CD47",
+      "expected_code48": "0F B6 15 E6 43 D1 01 48 85 C0 41 0F 95 C1 48 85 C0 74 0A 44 0F B6 80 1B 04 00 00 EB 04 44 0F B6 C2 44 3A C2 0F 84 88 01 00 00 45 84 C9 74 07 0F",
+      "actual_code48": "0F B6 15 E6 43 D1 01 48 85 C0 41 0F 95 C1 48 85 C0 74 0A 44 0F B6 80 1B 04 00 00 EB 04 44 0F B6 C2 44 3A C2 0F 84 88 01 00 00 45 84 C9 74 07 0F",
+      "code_matches": true,
+      "code_disasm": [
+        "14021CD47 - 0FB6 15 E643D101  - movzx edx,byte ptr [141F31134]",
+        "14021CD4E - 48 85 C0  - test rax,rax",
+        "14021CD51 - 41 0F95 C1  - setne r9b",
+        "14021CD55 - 48 85 C0  - test rax,rax",
+        "14021CD58 - 74 0A - je 14021CD64"
+      ],
+      "candidate_rva": "0x1F31134",
+      "candidate_address": "0x141F31134",
+      "candidate_is_code": false,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "151af149a643ea40d957ae4b3132fbabdf4e097938a8754bc076077a14bc328e",
+      "actual_target_sha256": "151af149a643ea40d957ae4b3132fbabdf4e097938a8754bc076077a14bc328e"
+    },
+    {
+      "id": "functions.BuffManagerClient__OnBuffRemove",
+      "group": "functions",
+      "match_rva": "0x8BE000",
+      "match_address": "0x1408BE000",
+      "expected_code48": "40 53 57 41 57 48 83 EC 40 48 8B 41 20 41 8B D9 4C 8B 49 18 49 2B C1 0F B6 FA 48 C1 F8 04 0F 29 74 24 30 F3 0F 10 B4 24 80 00 00 00 45 0F B6 F8",
+      "actual_code48": "40 53 57 41 57 48 83 EC 40 48 8B 41 20 41 8B D9 4C 8B 49 18 49 2B C1 0F B6 FA 48 C1 F8 04 0F 29 74 24 30 F3 0F 10 B4 24 80 00 00 00 45 0F B6 F8",
+      "code_matches": true,
+      "code_disasm": [
+        "1408BE000 - 40 53 - push rbx",
+        "1408BE002 - 57 - push rdi",
+        "1408BE003 - 41 57 - push r15",
+        "1408BE005 - 48 83 EC 40 - sub rsp,40",
+        "1408BE009 - 48 8B 41 20  - mov rax,[rcx+20]"
+      ],
+      "candidate_rva": "0x8BE000",
+      "candidate_address": "0x1408BE000",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "fbcca213d0ac79fdc96c970a7fa6f2b9d37fe5914cfb0a3b09948cf414c6ef6b",
+      "actual_target_sha256": "fbcca213d0ac79fdc96c970a7fa6f2b9d37fe5914cfb0a3b09948cf414c6ef6b"
+    },
+    {
+      "id": "functions.CastSpellSafe",
+      "group": "functions",
+      "match_rva": "0xB7AC60",
+      "match_address": "0x140B7AC60",
+      "expected_code48": "40 57 41 54 48 83 EC 58 4C 8B E2 E8 00 99 FE FF 48 8B F8 48 85 C0 0F 84 0A 03 00 00 48 8B C8 E8 6C 0F 94 FF 48 85 C0 0F 84 F9 02 00 00 4C 89 6C",
+      "actual_code48": "40 57 41 54 48 83 EC 58 4C 8B E2 E8 00 99 FE FF 48 8B F8 48 85 C0 0F 84 0A 03 00 00 48 8B C8 E8 6C 0F 94 FF 48 85 C0 0F 84 F9 02 00 00 4C 89 6C",
+      "code_matches": true,
+      "code_disasm": [
+        "140B7AC60 - 40 57 - push rdi",
+        "140B7AC62 - 41 54 - push r12",
+        "140B7AC64 - 48 83 EC 58 - sub rsp,58",
+        "140B7AC68 - 4C 8B E2  - mov r12,rdx",
+        "140B7AC6B - E8 0099FEFF - call 140B64570"
+      ],
+      "candidate_rva": "0xB7AC60",
+      "candidate_address": "0x140B7AC60",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "7e398ee4e99c20838959f1902f2575d41e27cd88636f09d2cc4b11f3a4f4271c",
+      "actual_target_sha256": "7e398ee4e99c20838959f1902f2575d41e27cd88636f09d2cc4b11f3a4f4271c"
+    },
+    {
+      "id": "functions.CastSpellTarget",
+      "group": "functions",
+      "match_rva": "0x558FF0",
+      "match_address": "0x140558FF0",
+      "expected_code48": "48 8B C4 48 89 50 10 48 89 48 08 55 56 41 54 41 56 41 57 48 83 EC 60 44 8B 71 10 45 32 FF 4C 89 74 24 28 49 8B F0 4C 8B E2 48 8B E9 4D 85 F6 0F",
+      "actual_code48": "48 8B C4 48 89 50 10 48 89 48 08 55 56 41 54 41 56 41 57 48 83 EC 60 44 8B 71 10 45 32 FF 4C 89 74 24 28 49 8B F0 4C 8B E2 48 8B E9 4D 85 F6 0F",
+      "code_matches": true,
+      "code_disasm": [
+        "140558FF0 - 48 8B C4  - mov rax,rsp",
+        "140558FF3 - 48 89 50 10  - mov [rax+10],rdx",
+        "140558FF7 - 48 89 48 08  - mov [rax+08],rcx",
+        "140558FFB - 55 - push rbp",
+        "140558FFC - 56 - push rsi"
+      ],
+      "candidate_rva": "0x558FF0",
+      "candidate_address": "0x140558FF0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "a014f7951dd842da572bb1e93fe4143f17f5f0d4e618a8c82208e94abc98e56f",
+      "actual_target_sha256": "a014f7951dd842da572bb1e93fe4143f17f5f0d4e618a8c82208e94abc98e56f"
+    },
+    {
+      "id": "functions.CharacterDataStack__Push",
+      "group": "functions",
+      "match_rva": "0x3D6DF0",
+      "match_address": "0x1403D6DF0",
+      "expected_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 50 48 8B F2 48 8B F9 49 8B D0 48 8D 4C 24 28 41 8B D9 E8 0B 72 D6 00 48 8B 94 24 80 00 00 00 48 8D 4C",
+      "actual_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 50 48 8B F2 48 8B F9 49 8B D0 48 8D 4C 24 28 41 8B D9 E8 0B 72 D6 00 48 8B 94 24 80 00 00 00 48 8D 4C",
+      "code_matches": true,
+      "code_disasm": [
+        "1403D6DF0 - 48 89 5C 24 08  - mov [rsp+08],rbx",
+        "1403D6DF5 - 48 89 74 24 10  - mov [rsp+10],rsi",
+        "1403D6DFA - 57 - push rdi",
+        "1403D6DFB - 48 83 EC 50 - sub rsp,50",
+        "1403D6DFF - 48 8B F2  - mov rsi,rdx"
+      ],
+      "candidate_rva": "0x3D6DF0",
+      "candidate_address": "0x1403D6DF0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "1d69e28f127129d1ffbe708f0676ec4bed3a84eeebcfa71b1a836fd449be4961",
+      "actual_target_sha256": "1d69e28f127129d1ffbe708f0676ec4bed3a84eeebcfa71b1a836fd449be4961"
+    },
+    {
+      "id": "functions.CharacterDataStackUpdate",
+      "group": "functions",
+      "match_rva": "0x21CC90",
+      "match_address": "0x14021CC90",
+      "expected_code48": "88 54 24 10 55 53 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 E1 48 81 EC 88 00 00 00 48 8B 31 48 8D 51 18 48 8B 79 08 45 33 E4 4C 89 65 D7 41 8B",
+      "actual_code48": "88 54 24 10 55 53 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 E1 48 81 EC 88 00 00 00 48 8B 31 48 8D 51 18 48 8B 79 08 45 33 E4 4C 89 65 D7 41 8B",
+      "code_matches": true,
+      "code_disasm": [
+        "14021CC90 - 88 54 24 10  - mov [rsp+10],dl",
+        "14021CC94 - 55 - push rbp",
+        "14021CC95 - 53 - push rbx",
+        "14021CC96 - 56 - push rsi",
+        "14021CC97 - 57 - push rdi"
+      ],
+      "candidate_rva": "0x21CC90",
+      "candidate_address": "0x14021CC90",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "fa9f4dbf390ce49b1223bd8267090cf0e18ca8a4796f9db07ef57356e225938b",
+      "actual_target_sha256": "fa9f4dbf390ce49b1223bd8267090cf0e18ca8a4796f9db07ef57356e225938b"
+    },
+    {
+      "id": "functions.ComponentLookupFn",
+      "group": "functions",
+      "match_rva": "0x1153600",
+      "match_address": "0x141153600",
+      "expected_code48": "48 89 6C 24 20 56 41 54 41 57 48 83 EC 20 48 8B 2D 9B 42 DA 00 4C 8B E2 48 8B F1 44 8B 7D 50 44 39 79 04 75 13 48 8B 41 08 48 8B 6C 24 58 48 83",
+      "actual_code48": "48 89 6C 24 20 56 41 54 41 57 48 83 EC 20 48 8B 2D 9B 42 DA 00 4C 8B E2 48 8B F1 44 8B 7D 50 44 39 79 04 75 13 48 8B 41 08 48 8B 6C 24 58 48 83",
+      "code_matches": true,
+      "code_disasm": [
+        "141153600 - 48 89 6C 24 20  - mov [rsp+20],rbp",
+        "141153605 - 56 - push rsi",
+        "141153606 - 41 54 - push r12",
+        "141153608 - 41 57 - push r15",
+        "14115360A - 48 83 EC 20 - sub rsp,20"
+      ],
+      "candidate_rva": "0x1153600",
+      "candidate_address": "0x141153600",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "8e1db3a2c4fcfecb4d3d0465ebfcce1947223cb14f47e97fbef08740363cc398",
+      "actual_target_sha256": "8e1db3a2c4fcfecb4d3d0465ebfcce1947223cb14f47e97fbef08740363cc398"
+    },
+    {
+      "id": "functions.DistanceSq",
+      "group": "functions",
+      "match_rva": "0x227480",
+      "match_address": "0x140227480",
+      "expected_code48": "F3 0F 10 81 5C 02 00 00 F3 0F 10 89 BC 01 00 00 F3 0F 58 81 B8 01 00 00 F3 0F 58 0D 3C A5 7F 01 F3 0F 59 C1 C3 CC CC CC CC CC CC CC CC CC CC CC",
+      "actual_code48": "F3 0F 10 81 5C 02 00 00 F3 0F 10 89 BC 01 00 00 F3 0F 58 81 B8 01 00 00 F3 0F 58 0D 3C A5 7F 01 F3 0F 59 C1 C3 CC CC CC CC CC CC CC CC CC CC CC",
+      "code_matches": true,
+      "code_disasm": [
+        "140227480 - F3 0F10 81 5C020000  - movss xmm0,[rcx+0000025C]",
+        "140227488 - F3 0F10 89 BC010000  - movss xmm1,[rcx+000001BC]",
+        "140227490 - F3 0F58 81 B8010000  - addss xmm0,[rcx+000001B8]",
+        "140227498 - F3 0F58 0D 3CA57F01  - addss xmm1,[141A219DC]",
+        "1402274A0 - F3 0F59 C1  - mulss xmm0,xmm1"
+      ],
+      "candidate_rva": "0x227480",
+      "candidate_address": "0x140227480",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "d6ce03f9fec502458934d1051f08752df0b366cbc4a3cd9223b46b4372707764",
+      "actual_target_sha256": "d6ce03f9fec502458934d1051f08752df0b366cbc4a3cd9223b46b4372707764"
+    },
+    {
+      "id": "functions.GameObject__IsType",
+      "group": "functions",
+      "match_rva": "0x2B04A0",
+      "match_address": "0x1402B04A0",
+      "expected_code48": "40 56 48 83 EC 10 0F B6 41 63 4C 8D 41 4C 45 0F B6 48 15 8B F2 41 8B 4C 80 04 89 0C 24 33 C9 4D 85 C9 0F 84 FB 00 00 00 49 83 F9 08 0F 82 DE 00",
+      "actual_code48": "40 56 48 83 EC 10 0F B6 41 63 4C 8D 41 4C 45 0F B6 48 15 8B F2 41 8B 4C 80 04 89 0C 24 33 C9 4D 85 C9 0F 84 FB 00 00 00 49 83 F9 08 0F 82 DE 00",
+      "code_matches": true,
+      "code_disasm": [
+        "1402B04A0 - 40 56 - push rsi",
+        "1402B04A2 - 48 83 EC 10 - sub rsp,10",
+        "1402B04A6 - 0FB6 41 63  - movzx eax,byte ptr [rcx+63]",
+        "1402B04AA - 4C 8D 41 4C  - lea r8,[rcx+4C]",
+        "1402B04AE - 45 0FB6 48 15  - movzx r9d,byte ptr [r8+15]"
+      ],
+      "candidate_rva": "0x2B04A0",
+      "candidate_address": "0x1402B04A0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "61bcf7fbdedf59cbfde737a8b9bb883edf2cb2ffaac45a63b201b627cf01f342",
+      "actual_target_sha256": "61bcf7fbdedf59cbfde737a8b9bb883edf2cb2ffaac45a63b201b627cf01f342"
+    },
+    {
+      "id": "functions.GetAttackDelay",
+      "group": "functions",
+      "match_rva": "0x2B52BC",
+      "match_address": "0x1402B52BC",
+      "expected_code48": "E8 7F F9 2D 00 33 C0 F3 0F 11 83 30 01 00 00 48 8B CB 48 89 83 28 01 00 00 89 83 24 01 00 00 66 C7 83 48 01 00 00 01 01 89 AB 54 01 00 00 E8 B1",
+      "actual_code48": "E8 7F F9 2D 00 33 C0 F3 0F 11 83 30 01 00 00 48 8B CB 48 89 83 28 01 00 00 89 83 24 01 00 00 66 C7 83 48 01 00 00 01 01 89 AB 54 01 00 00 E8 B1",
+      "code_matches": true,
+      "code_disasm": [
+        "1402B52BC - E8 7FF92D00 - call 140594C40",
+        "1402B52C1 - 33 C0  - xor eax,eax",
+        "1402B52C3 - F3 0F11 83 30010000  - movss [rbx+00000130],xmm0",
+        "1402B52CB - 48 8B CB  - mov rcx,rbx",
+        "1402B52CE - 48 89 83 28010000  - mov [rbx+00000128],rax"
+      ],
+      "candidate_rva": "0x594C40",
+      "candidate_address": "0x140594C40",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "669ea4a383c43df19cd3f1bac6ba38e491d90876b2dcaf821e14731e44ecc870",
+      "actual_target_sha256": "669ea4a383c43df19cd3f1bac6ba38e491d90876b2dcaf821e14731e44ecc870"
+    },
+    {
+      "id": "functions.GetAttackWindup",
+      "group": "functions",
+      "match_rva": "0x594B40",
+      "match_address": "0x140594B40",
+      "expected_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 60 48 8B 01 8B DA 0F 29 74 24 50 48 8B F1 0F 29 7C 24 40 44 0F 29 44 24 30 44 0F 29 4C 24 20 FF 90 F0",
+      "actual_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 60 48 8B 01 8B DA 0F 29 74 24 50 48 8B F1 0F 29 7C 24 40 44 0F 29 44 24 30 44 0F 29 4C 24 20 FF 90 F0",
+      "code_matches": true,
+      "code_disasm": [
+        "140594B40 - 48 89 5C 24 08  - mov [rsp+08],rbx",
+        "140594B45 - 48 89 74 24 10  - mov [rsp+10],rsi",
+        "140594B4A - 57 - push rdi",
+        "140594B4B - 48 83 EC 60 - sub rsp,60",
+        "140594B4F - 48 8B 01  - mov rax,[rcx]"
+      ],
+      "candidate_rva": "0x594B40",
+      "candidate_address": "0x140594B40",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "569a9370f0b7690feb9647b5720d9d5afdf6aa677d2ce7df47cccc0b6351a4cd",
+      "actual_target_sha256": "569a9370f0b7690feb9647b5720d9d5afdf6aa677d2ce7df47cccc0b6351a4cd"
+    },
+    {
+      "id": "functions.GetBoundingRadius",
+      "group": "functions",
+      "match_rva": "0x29C0E0",
+      "match_address": "0x14029C0E0",
+      "expected_code48": "40 53 48 83 EC 30 48 83 B9 48 3E 00 00 00 48 8B D9 0F 29 74 24 20 74 6D 48 8B 01 FF 90 F0 01 00 00 48 8B C8 E8 47 4B 17 00 0F 28 F0 0F 57 C9 0F",
+      "actual_code48": "40 53 48 83 EC 30 48 83 B9 48 3E 00 00 00 48 8B D9 0F 29 74 24 20 74 6D 48 8B 01 FF 90 F0 01 00 00 48 8B C8 E8 47 4B 17 00 0F 28 F0 0F 57 C9 0F",
+      "code_matches": true,
+      "code_disasm": [
+        "14029C0E0 - 40 53 - push rbx",
+        "14029C0E2 - 48 83 EC 30 - sub rsp,30",
+        "14029C0E6 - 48 83 B9 483E0000 00 - cmp qword ptr [rcx+00003E48],00",
+        "14029C0EE - 48 8B D9  - mov rbx,rcx",
+        "14029C0F1 - 0F29 74 24 20  - movaps [rsp+20],xmm6"
+      ],
+      "candidate_rva": "0x29C0E0",
+      "candidate_address": "0x14029C0E0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "23d90b7a69eb3d5a850ca15dfe552a2cb5937f34e31371ab27a88673c592eb60",
+      "actual_target_sha256": "23d90b7a69eb3d5a850ca15dfe552a2cb5937f34e31371ab27a88673c592eb60"
+    },
+    {
+      "id": "functions.GetMapID",
+      "group": "functions",
+      "match_rva": "0x179FC51",
+      "match_address": "0x14179FC51",
+      "expected_code48": "E8 7A 46 B0 FE 4C 89 7C 24 40 48 8D 4C 24 70 48 89 4C 24 38 45 8B CD 89 44 24 30 4D 8B C4 89 7C 24 28 41 8B D6 48 8B CD C7 44 24 20 01 00 00 00",
+      "actual_code48": "E8 7A 46 B0 FE 4C 89 7C 24 40 48 8D 4C 24 70 48 89 4C 24 38 45 8B CD 89 44 24 30 4D 8B C4 89 7C 24 28 41 8B D6 48 8B CD C7 44 24 20 01 00 00 00",
+      "code_matches": true,
+      "code_disasm": [
+        "14179FC51 - E8 7A46B0FE - call 1402A42D0",
+        "14179FC56 - 4C 89 7C 24 40  - mov [rsp+40],r15",
+        "14179FC5B - 48 8D 4C 24 70  - lea rcx,[rsp+70]",
+        "14179FC60 - 48 89 4C 24 38  - mov [rsp+38],rcx",
+        "14179FC65 - 45 8B CD  - mov r9d,r13d"
+      ],
+      "candidate_rva": "0x2A42D0",
+      "candidate_address": "0x1402A42D0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "1b01feac2de35cf351b2d3f28f89c1c8d44fa11a7c1c60ba89032ad14d13df2b",
+      "actual_target_sha256": "1b01feac2de35cf351b2d3f28f89c1c8d44fa11a7c1c60ba89032ad14d13df2b"
+    },
+    {
+      "id": "functions.GetModelInstance",
+      "group": "functions",
+      "match_rva": "0x2C2A30",
+      "match_address": "0x1402C2A30",
+      "expected_code48": "48 89 5C 24 08 57 48 83 EC 20 48 8B DA 48 8B F9 8B 52 28 48 8B 4B 20 E8 B4 76 E8 00 4C 8D 44 24 38 89 44 24 38 48 8B D3 48 8B CF E8 80 F5 F8 FF",
+      "actual_code48": "48 89 5C 24 08 57 48 83 EC 20 48 8B DA 48 8B F9 8B 52 28 48 8B 4B 20 E8 B4 76 E8 00 4C 8D 44 24 38 89 44 24 38 48 8B D3 48 8B CF E8 80 F5 F8 FF",
+      "code_matches": true,
+      "code_disasm": [
+        "1402C2A30 - 48 89 5C 24 08  - mov [rsp+08],rbx",
+        "1402C2A35 - 57 - push rdi",
+        "1402C2A36 - 48 83 EC 20 - sub rsp,20",
+        "1402C2A3A - 48 8B DA  - mov rbx,rdx",
+        "1402C2A3D - 48 8B F9  - mov rdi,rcx"
+      ],
+      "candidate_rva": "0x2C2A30",
+      "candidate_address": "0x1402C2A30",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "27246fdcc9a48e63823180627d10a46fe2699e6dea646b7d403faa69704becb9",
+      "actual_target_sha256": "27246fdcc9a48e63823180627d10a46fe2699e6dea646b7d403faa69704becb9"
+    },
+    {
+      "id": "functions.GetNextObject",
+      "group": "functions",
+      "match_rva": "0x55E330",
+      "match_address": "0x14055E330",
+      "expected_code48": "0F B7 42 20 44 8B 41 28 FF C0 41 3B C0 73 1B 4C 8B 49 20 41 F6 04 C1 01 75 09 49 8B 14 C1 48 85 D2 75 0A FF C0 41 3B C0 72 E9 33 C0 C3 48 8B C2",
+      "actual_code48": "0F B7 42 20 44 8B 41 28 FF C0 41 3B C0 73 1B 4C 8B 49 20 41 F6 04 C1 01 75 09 49 8B 14 C1 48 85 D2 75 0A FF C0 41 3B C0 72 E9 33 C0 C3 48 8B C2",
+      "code_matches": true,
+      "code_disasm": [
+        "14055E330 - 0FB7 42 20  - movzx eax,word ptr [rdx+20]",
+        "14055E334 - 44 8B 41 28  - mov r8d,[rcx+28]",
+        "14055E338 - FF C0  - inc eax",
+        "14055E33A - 41 3B C0  - cmp eax,r8d",
+        "14055E33D - 73 1B - jae 14055E35A"
+      ],
+      "candidate_rva": "0x55E330",
+      "candidate_address": "0x14055E330",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "c7f01d24f67f287fc10c4cd9e90d15e6c26d92ba67949e488a0ee303e4dab7e5",
+      "actual_target_sha256": "c7f01d24f67f287fc10c4cd9e90d15e6c26d92ba67949e488a0ee303e4dab7e5"
+    },
+    {
+      "id": "functions.GetObjectByID",
+      "group": "functions",
+      "match_rva": "0x55C320",
+      "match_address": "0x14055C320",
+      "expected_code48": "4C 8B C1 85 D2 74 1B 49 8B 40 20 0F B7 CA F6 04 C8 01 75 0E 48 8B 04 C8 48 85 C0 74 05 39 50 20 74 02 33 C0 C3 CC CC CC CC CC CC CC CC CC CC CC",
+      "actual_code48": "4C 8B C1 85 D2 74 1B 49 8B 40 20 0F B7 CA F6 04 C8 01 75 0E 48 8B 04 C8 48 85 C0 74 05 39 50 20 74 02 33 C0 C3 CC CC CC CC CC CC CC CC CC CC CC",
+      "code_matches": true,
+      "code_disasm": [
+        "14055C320 - 4C 8B C1  - mov r8,rcx",
+        "14055C323 - 85 D2  - test edx,edx",
+        "14055C325 - 74 1B - je 14055C342",
+        "14055C327 - 49 8B 40 20  - mov rax,[r8+20]",
+        "14055C32B - 0FB7 CA  - movzx ecx,dx"
+      ],
+      "candidate_rva": "0x55C320",
+      "candidate_address": "0x14055C320",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "1aebdbf6e1c85402833c54758462786def56a15fc1b762ee5f4ba1454e809169",
+      "actual_target_sha256": "1aebdbf6e1c85402833c54758462786def56a15fc1b762ee5f4ba1454e809169"
+    },
+    {
+      "id": "functions.GetPing",
+      "group": "functions",
+      "match_rva": "0x6729B0",
+      "match_address": "0x1406729B0",
+      "expected_code48": "48 83 EC 28 0F B6 81 1B 04 00 00 3A 05 73 E7 8B 01 75 07 33 C0 48 83 C4 28 C3 48 69 D0 18 01 00 00 48 8D 05 78 FB 8B 01 48 81 C1 C8 00 00 00 48",
+      "actual_code48": "48 83 EC 28 0F B6 81 1B 04 00 00 3A 05 73 E7 8B 01 75 07 33 C0 48 83 C4 28 C3 48 69 D0 18 01 00 00 48 8D 05 78 FB 8B 01 48 81 C1 C8 00 00 00 48",
+      "code_matches": true,
+      "code_disasm": [
+        "1406729B0 - 48 83 EC 28 - sub rsp,28",
+        "1406729B4 - 0FB6 81 1B040000  - movzx eax,byte ptr [rcx+0000041B]",
+        "1406729BB - 3A 05 73E78B01  - cmp al,[141F31134]",
+        "1406729C1 - 75 07 - jne 1406729CA",
+        "1406729C3 - 33 C0  - xor eax,eax"
+      ],
+      "candidate_rva": "0x6729B0",
+      "candidate_address": "0x1406729B0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "4e1e1a4b6cb3c35e8564e44c626d8e9cdcda40e5fa52dd7caea1aa0dec3a4bfe",
+      "actual_target_sha256": "4e1e1a4b6cb3c35e8564e44c626d8e9cdcda40e5fa52dd7caea1aa0dec3a4bfe"
+    },
+    {
+      "id": "functions.GetSpellSlot",
+      "group": "functions",
+      "match_rva": "0x916C20",
+      "match_address": "0x140916C20",
+      "expected_code48": "83 FA 3F 77 0C 48 63 C2 48 8B 84 C1 E0 0A 00 00 C3 48 8B 81 E0 0A 00 00 C3 CC CC CC CC CC CC CC 48 89 5C 24 10 48 89 6C 24 18 56 48 83 EC 20 48",
+      "actual_code48": "83 FA 3F 77 0C 48 63 C2 48 8B 84 C1 E0 0A 00 00 C3 48 8B 81 E0 0A 00 00 C3 CC CC CC CC CC CC CC 48 89 5C 24 10 48 89 6C 24 18 56 48 83 EC 20 48",
+      "code_matches": true,
+      "code_disasm": [
+        "140916C20 - 83 FA 3F - cmp edx,3F",
+        "140916C23 - 77 0C - ja 140916C31",
+        "140916C25 - 48 63 C2  - movsxd  rax,edx",
+        "140916C28 - 48 8B 84 C1 E00A0000  - mov rax,[rcx+rax*8+00000AE0]",
+        "140916C30 - C3 - ret "
+      ],
+      "candidate_rva": "0x916C20",
+      "candidate_address": "0x140916C20",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "0660cba69f3efa22867c0edc5d7d3116dfb1208c854cc9b1c766d19428d436e6",
+      "actual_target_sha256": "0660cba69f3efa22867c0edc5d7d3116dfb1208c854cc9b1c766d19428d436e6"
+    },
+    {
+      "id": "functions.IsAlive",
+      "group": "functions",
+      "match_rva": "0x2F0860",
+      "match_address": "0x1402F0860",
+      "expected_code48": "40 53 48 83 EC 20 48 8B 01 48 8B D9 FF 90 38 01 00 00 84 C0 74 19 48 8D 8B 88 02 00 00 48 8B 01 FF 50 10 84 C0 75 08 B0 01 48 83 C4 20 5B C3 32",
+      "actual_code48": "40 53 48 83 EC 20 48 8B 01 48 8B D9 FF 90 38 01 00 00 84 C0 74 19 48 8D 8B 88 02 00 00 48 8B 01 FF 50 10 84 C0 75 08 B0 01 48 83 C4 20 5B C3 32",
+      "code_matches": true,
+      "code_disasm": [
+        "1402F0860 - 40 53 - push rbx",
+        "1402F0862 - 48 83 EC 20 - sub rsp,20",
+        "1402F0866 - 48 8B 01  - mov rax,[rcx]",
+        "1402F0869 - 48 8B D9  - mov rbx,rcx",
+        "1402F086C - FF 90 38010000  - call qword ptr [rax+00000138]"
+      ],
+      "candidate_rva": "0x2F0860",
+      "candidate_address": "0x1402F0860",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "f91e381ff85d81cad19db19df4de42298b184ccd2a2add353e7f44a3d2af758a",
+      "actual_target_sha256": "f91e381ff85d81cad19db19df4de42298b184ccd2a2add353e7f44a3d2af758a"
+    },
+    {
+      "id": "functions.IsBuilding",
+      "group": "functions",
+      "match_rva": "0xD8E288",
+      "match_address": "0x140D8E288",
+      "expected_code48": "E8 F3 E6 57 FF 84 C0 0F 85 BD 00 00 00 48 8B CB E8 13 E3 57 FF 84 C0 0F 84 A3 00 00 00 48 8B CB E8 43 E7 57 FF 48 85 C0 74 1A 48 8D 54 24 50 48",
+      "actual_code48": "E8 F3 E6 57 FF 84 C0 0F 85 BD 00 00 00 48 8B CB E8 13 E3 57 FF 84 C0 0F 84 A3 00 00 00 48 8B CB E8 43 E7 57 FF 48 85 C0 74 1A 48 8D 54 24 50 48",
+      "code_matches": true,
+      "code_disasm": [
+        "140D8E288 - E8 F3E657FF - call 14030C980",
+        "140D8E28D - 84 C0  - test al,al",
+        "140D8E28F - 0F85 BD000000 - jne 140D8E352",
+        "140D8E295 - 48 8B CB  - mov rcx,rbx",
+        "140D8E298 - E8 13E357FF - call 14030C5B0"
+      ],
+      "candidate_rva": "0x30C980",
+      "candidate_address": "0x14030C980",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "a0abce79a3f50041d7a707f2abbcb407daa6d01814882777482d06cdf4055120",
+      "actual_target_sha256": "a0abce79a3f50041d7a707f2abbcb407daa6d01814882777482d06cdf4055120"
+    },
+    {
+      "id": "functions.IsHero",
+      "group": "functions",
+      "match_rva": "0xC051F7",
+      "match_address": "0x140C051F7",
+      "expected_code48": "E8 D4 75 70 FF 84 C0 0F 85 17 02 00 00 48 8B CB E8 F4 75 70 FF 84 C0 74 1D 48 8B 03 48 8B CB FF 90 18 05 00 00 84 C0 75 0D 83 BB 40 0F 00 00 00",
+      "actual_code48": "E8 D4 75 70 FF 84 C0 0F 85 17 02 00 00 48 8B CB E8 F4 75 70 FF 84 C0 74 1D 48 8B 03 48 8B CB FF 90 18 05 00 00 84 C0 75 0D 83 BB 40 0F 00 00 00",
+      "code_matches": true,
+      "code_disasm": [
+        "140C051F7 - E8 D47570FF - call 14030C7D0",
+        "140C051FC - 84 C0  - test al,al",
+        "140C051FE - 0F85 17020000 - jne 140C0541B",
+        "140C05204 - 48 8B CB  - mov rcx,rbx",
+        "140C05207 - E8 F47570FF - call 14030C800"
+      ],
+      "candidate_rva": "0x30C7D0",
+      "candidate_address": "0x14030C7D0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "9372ee3892a9d27e461b83be840f50e6c9f505c6589050ecddbea9cafadc956d",
+      "actual_target_sha256": "9372ee3892a9d27e461b83be840f50e6c9f505c6589050ecddbea9cafadc956d"
+    },
+    {
+      "id": "functions.IssueOrderCore",
+      "group": "functions",
+      "match_rva": "0x20E300",
+      "match_address": "0x14020E300",
+      "expected_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 20 48 C7 41 28 FF FF FF FF 33 F6 48 89 71 18 48 8B D9 48 89 71 20 40 88 71 30 48 C7 01 FF FF FF FF C7",
+      "actual_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 20 48 C7 41 28 FF FF FF FF 33 F6 48 89 71 18 48 8B D9 48 89 71 20 40 88 71 30 48 C7 01 FF FF FF FF C7",
+      "code_matches": true,
+      "code_disasm": [
+        "14020E300 - 48 89 5C 24 08  - mov [rsp+08],rbx",
+        "14020E305 - 48 89 74 24 10  - mov [rsp+10],rsi",
+        "14020E30A - 57 - push rdi",
+        "14020E30B - 48 83 EC 20 - sub rsp,20",
+        "14020E30F - 48 C7 41 28 FFFFFFFF - mov qword ptr [rcx+28],FFFFFFFFFFFFFFFF"
+      ],
+      "candidate_rva": "0x20E300",
+      "candidate_address": "0x14020E300",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "c659b33720c83564a6c59c3d2636b0397a15d1da216896774f05e8e14b6c7f3b",
+      "actual_target_sha256": "c659b33720c83564a6c59c3d2636b0397a15d1da216896774f05e8e14b6c7f3b"
+    },
+    {
+      "id": "functions.OnCreateObject",
+      "group": "functions",
+      "match_rva": "0x2E1040",
+      "match_address": "0x1402E1040",
+      "expected_code48": "48 8B C4 48 89 58 08 48 89 68 10 48 89 70 18 48 89 78 20 41 56 48 81 EC 90 00 00 00 0F 29 70 E8 0F 57 C0 0F 29 78 D8 4D 8B F0 44 0F 29 40 C8 48",
+      "actual_code48": "48 8B C4 48 89 58 08 48 89 68 10 48 89 70 18 48 89 78 20 41 56 48 81 EC 90 00 00 00 0F 29 70 E8 0F 57 C0 0F 29 78 D8 4D 8B F0 44 0F 29 40 C8 48",
+      "code_matches": true,
+      "code_disasm": [
+        "1402E1040 - 48 8B C4  - mov rax,rsp",
+        "1402E1043 - 48 89 58 08  - mov [rax+08],rbx",
+        "1402E1047 - 48 89 68 10  - mov [rax+10],rbp",
+        "1402E104B - 48 89 70 18  - mov [rax+18],rsi",
+        "1402E104F - 48 89 78 20  - mov [rax+20],rdi"
+      ],
+      "candidate_rva": "0x2E1040",
+      "candidate_address": "0x1402E1040",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "3e64d1f311a83ac65d514bed5296961b19ee3782d87c2f965387a14a2b926b18",
+      "actual_target_sha256": "3e64d1f311a83ac65d514bed5296961b19ee3782d87c2f965387a14a2b926b18"
+    },
+    {
+      "id": "functions.OnDeleteObject",
+      "group": "functions",
+      "match_rva": "0x5591B0",
+      "match_address": "0x1405591B0",
+      "expected_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 30 48 8B D9 48 8B FA 48 8B CA E8 43 55 D5 FF 84 C0 75 39 48 8B 93 C0 00 00 00 4C 8B C7 48 8B 8B B8 00",
+      "actual_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 30 48 8B D9 48 8B FA 48 8B CA E8 43 55 D5 FF 84 C0 75 39 48 8B 93 C0 00 00 00 4C 8B C7 48 8B 8B B8 00",
+      "code_matches": true,
+      "code_disasm": [
+        "1405591B0 - 48 89 5C 24 08  - mov [rsp+08],rbx",
+        "1405591B5 - 48 89 74 24 10  - mov [rsp+10],rsi",
+        "1405591BA - 57 - push rdi",
+        "1405591BB - 48 83 EC 30 - sub rsp,30",
+        "1405591BF - 48 8B D9  - mov rbx,rcx"
+      ],
+      "candidate_rva": "0x5591B0",
+      "candidate_address": "0x1405591B0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "81dc4fa664f925aac8a2f8e99a36d32f9418eb68e54d45b9718d6812d6fb3d01",
+      "actual_target_sha256": "81dc4fa664f925aac8a2f8e99a36d32f9418eb68e54d45b9718d6812d6fb3d01"
+    },
+    {
+      "id": "functions.OnDoCast",
+      "group": "functions",
+      "match_rva": "0x927C90",
+      "match_address": "0x140927C90",
+      "expected_code48": "40 56 57 48 83 EC 28 48 8B F2 48 8B F9 8B 51 08 48 3B D6 0F 84 9B 02 00 00 48 89 5C 24 40 48 89 6C 24 48 76 45 48 69 EA B0 00 00 00 48 69 DE B0",
+      "actual_code48": "40 56 57 48 83 EC 28 48 8B F2 48 8B F9 8B 51 08 48 3B D6 0F 84 9B 02 00 00 48 89 5C 24 40 48 89 6C 24 48 76 45 48 69 EA B0 00 00 00 48 69 DE B0",
+      "code_matches": true,
+      "code_disasm": [
+        "140927C90 - 40 56 - push rsi",
+        "140927C92 - 57 - push rdi",
+        "140927C93 - 48 83 EC 28 - sub rsp,28",
+        "140927C97 - 48 8B F2  - mov rsi,rdx",
+        "140927C9A - 48 8B F9  - mov rdi,rcx"
+      ],
+      "candidate_rva": "0x927C90",
+      "candidate_address": "0x140927C90",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "c3b34e10a24f4d413ada274da493488d91b5552cd81e518c2a34fdd791316b30",
+      "actual_target_sha256": "c3b34e10a24f4d413ada274da493488d91b5552cd81e518c2a34fdd791316b30"
+    },
+    {
+      "id": "functions.OnProcessSpell",
+      "group": "functions",
+      "match_rva": "0x92D5F0",
+      "match_address": "0x14092D5F0",
+      "expected_code48": "40 55 56 48 81 EC 88 00 00 00 48 83 79 28 00 48 8B EA 48 8B F1 75 05 E8 74 F1 FF FF 48 8B 46 18 48 8D 4C 24 40 F2 0F 10 80 3C 02 00 00 F2 0F 11",
+      "actual_code48": "40 55 56 48 81 EC 88 00 00 00 48 83 79 28 00 48 8B EA 48 8B F1 75 05 E8 74 F1 FF FF 48 8B 46 18 48 8D 4C 24 40 F2 0F 10 80 3C 02 00 00 F2 0F 11",
+      "code_matches": true,
+      "code_disasm": [
+        "14092D5F0 - 40 55 - push rbp",
+        "14092D5F2 - 56 - push rsi",
+        "14092D5F3 - 48 81 EC 88000000 - sub rsp,00000088",
+        "14092D5FA - 48 83 79 28 00 - cmp qword ptr [rcx+28],00",
+        "14092D5FF - 48 8B EA  - mov rbp,rdx"
+      ],
+      "candidate_rva": "0x92D5F0",
+      "candidate_address": "0x14092D5F0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "e145a8da664f6618d3660cbcd8152e25351fc1129b65400cc383ac86661bd0cc",
+      "actual_target_sha256": "e145a8da664f6618d3660cbcd8152e25351fc1129b65400cc383ac86661bd0cc"
+    },
+    {
+      "id": "functions.OnSpellImpact",
+      "group": "functions",
+      "match_rva": "0x9270F0",
+      "match_address": "0x1409270F0",
+      "expected_code48": "48 89 5C 24 10 48 89 74 24 18 57 48 83 EC 30 49 8B 01 48 8B D9 49 8B C8 49 8B F9 48 8B 50 60 49 8B 00 0F B6 B2 8C 03 00 00 FF 50 20 4C 8B D0 0F",
+      "actual_code48": "48 89 5C 24 10 48 89 74 24 18 57 48 83 EC 30 49 8B 01 48 8B D9 49 8B C8 49 8B F9 48 8B 50 60 49 8B 00 0F B6 B2 8C 03 00 00 FF 50 20 4C 8B D0 0F",
+      "code_matches": true,
+      "code_disasm": [
+        "1409270F0 - 48 89 5C 24 10  - mov [rsp+10],rbx",
+        "1409270F5 - 48 89 74 24 18  - mov [rsp+18],rsi",
+        "1409270FA - 57 - push rdi",
+        "1409270FB - 48 83 EC 30 - sub rsp,30",
+        "1409270FF - 49 8B 01  - mov rax,[r9]"
+      ],
+      "candidate_rva": "0x9270F0",
+      "candidate_address": "0x1409270F0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "dc3f7a1ade1dbf05095387448a028ee0bc80a0b2796a5a66b76842cbc71ffb40",
+      "actual_target_sha256": "dc3f7a1ade1dbf05095387448a028ee0bc80a0b2796a5a66b76842cbc71ffb40"
+    },
+    {
+      "id": "functions.PrintChat",
+      "group": "functions",
+      "match_rva": "0x10F6E50",
+      "match_address": "0x1410F6E50",
+      "expected_code48": "40 53 55 56 57 41 54 41 55 41 56 48 83 EC 70 48 8B 05 1A 0E D8 00 48 33 C4 48 89 44 24 60 4C 8B E1 0F 57 C0 33 FF 48 8B CA 0F 11 44 24 40 48 89",
+      "actual_code48": "40 53 55 56 57 41 54 41 55 41 56 48 83 EC 70 48 8B 05 1A 0E D8 00 48 33 C4 48 89 44 24 60 4C 8B E1 0F 57 C0 33 FF 48 8B CA 0F 11 44 24 40 48 89",
+      "code_matches": true,
+      "code_disasm": [
+        "1410F6E50 - 40 53 - push rbx",
+        "1410F6E52 - 55 - push rbp",
+        "1410F6E53 - 56 - push rsi",
+        "1410F6E54 - 57 - push rdi",
+        "1410F6E55 - 41 54 - push r12"
+      ],
+      "candidate_rva": "0x10F6E50",
+      "candidate_address": "0x1410F6E50",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "2ee99cf41429f2d2cd29c8c9b86af577ae6b06008ac1cb0fdf818001f211fc2c",
+      "actual_target_sha256": "2ee99cf41429f2d2cd29c8c9b86af577ae6b06008ac1cb0fdf818001f211fc2c"
+    },
+    {
+      "id": "functions.ProjectAndClip",
+      "group": "functions",
+      "match_rva": "0x12FECC0",
+      "match_address": "0x1412FECC0",
+      "expected_code48": "48 89 5C 24 08 57 48 83 EC 50 48 8B BC 24 80 00 00 00 48 8D 05 67 1C B6 00 48 89 44 24 28 48 8B DA 4C 89 4C 24 20 48 8B D1 4D 8B C8 0F 29 74 24",
+      "actual_code48": "48 89 5C 24 08 57 48 83 EC 50 48 8B BC 24 80 00 00 00 48 8D 05 67 1C B6 00 48 89 44 24 28 48 8B DA 4C 89 4C 24 20 48 8B D1 4D 8B C8 0F 29 74 24",
+      "code_matches": true,
+      "code_disasm": [
+        "1412FECC0 - 48 89 5C 24 08  - mov [rsp+08],rbx",
+        "1412FECC5 - 57 - push rdi",
+        "1412FECC6 - 48 83 EC 50 - sub rsp,50",
+        "1412FECCA - 48 8B BC 24 80000000  - mov rdi,[rsp+00000080]",
+        "1412FECD2 - 48 8D 05 671CB600  - lea rax,[141E60940]"
+      ],
+      "candidate_rva": "0x12FECC0",
+      "candidate_address": "0x1412FECC0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "fd032f0274f76397a87f151337aa4e6cb8ccaaa813ed92a046ca9b041039fc60",
+      "actual_target_sha256": "fd032f0274f76397a87f151337aa4e6cb8ccaaa813ed92a046ca9b041039fc60"
+    },
+    {
+      "id": "functions.RemapBoneIndex",
+      "group": "functions",
+      "match_rva": "0x314850",
+      "match_address": "0x140314850",
+      "expected_code48": "48 89 5C 24 18 55 56 57 41 54 41 57 48 8D AC 24 A0 DB FF FF B8 60 25 00 00 E8 E2 81 65 01 48 2B E0 44 8B 05 C0 57 CC 01 4C 8B E1 65 48 8B 04 25",
+      "actual_code48": "48 89 5C 24 18 55 56 57 41 54 41 57 48 8D AC 24 A0 DB FF FF B8 60 25 00 00 E8 E2 81 65 01 48 2B E0 44 8B 05 C0 57 CC 01 4C 8B E1 65 48 8B 04 25",
+      "code_matches": true,
+      "code_disasm": [
+        "140314850 - 48 89 5C 24 18  - mov [rsp+18],rbx",
+        "140314855 - 55 - push rbp",
+        "140314856 - 56 - push rsi",
+        "140314857 - 57 - push rdi",
+        "140314858 - 41 54 - push r12"
+      ],
+      "candidate_rva": "0x314850",
+      "candidate_address": "0x140314850",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "8d3c882cc61222b0aed14bd8899a9a1d16b8a57cbfa063a9d455a8af47b6a6d6",
+      "actual_target_sha256": "8d3c882cc61222b0aed14bd8899a9a1d16b8a57cbfa063a9d455a8af47b6a6d6"
+    },
+    {
+      "id": "functions.SpellSlot__Cast",
+      "group": "functions",
+      "match_rva": "0x6FF8C0",
+      "match_address": "0x1406FF8C0",
+      "expected_code48": "48 89 5C 24 08 57 48 83 EC 20 48 8B 01 0F B6 DA FF 90 98 00 00 00 48 8B C8 48 8B F8 E8 4F D3 C0 FF 48 85 C0 74 15 0F B6 D3 48 8B C8 48 8B 5C 24",
+      "actual_code48": "48 89 5C 24 08 57 48 83 EC 20 48 8B 01 0F B6 DA FF 90 98 00 00 00 48 8B C8 48 8B F8 E8 4F D3 C0 FF 48 85 C0 74 15 0F B6 D3 48 8B C8 48 8B 5C 24",
+      "code_matches": true,
+      "code_disasm": [
+        "1406FF8C0 - 48 89 5C 24 08  - mov [rsp+08],rbx",
+        "1406FF8C5 - 57 - push rdi",
+        "1406FF8C6 - 48 83 EC 20 - sub rsp,20",
+        "1406FF8CA - 48 8B 01  - mov rax,[rcx]",
+        "1406FF8CD - 0FB6 DA  - movzx ebx,dl"
+      ],
+      "candidate_rva": "0x6FF8C0",
+      "candidate_address": "0x1406FF8C0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "c7bb1403528049098847b27131980d9cb0cd5748e993dac398792fc81959e8cc",
+      "actual_target_sha256": "c7bb1403528049098847b27131980d9cb0cd5748e993dac398792fc81959e8cc"
+    },
+    {
+      "id": "functions.SpellSlot__GetCooldown",
+      "group": "functions",
+      "match_rva": "0x8AE240",
+      "match_address": "0x1408AE240",
+      "expected_code48": "40 53 48 83 EC 40 48 8B D9 0F 29 74 24 30 48 8B 0D F3 AF 63 01 0F 29 7C 24 20 48 8B 49 10 E8 BD E2 92 00 83 7B 5C 00 0F 28 F8 F3 0F 10 73 30 F3",
+      "actual_code48": "40 53 48 83 EC 40 48 8B D9 0F 29 74 24 30 48 8B 0D F3 AF 63 01 0F 29 7C 24 20 48 8B 49 10 E8 BD E2 92 00 83 7B 5C 00 0F 28 F8 F3 0F 10 73 30 F3",
+      "code_matches": true,
+      "code_disasm": [
+        "1408AE240 - 40 53 - push rbx",
+        "1408AE242 - 48 83 EC 40 - sub rsp,40",
+        "1408AE246 - 48 8B D9  - mov rbx,rcx",
+        "1408AE249 - 0F29 74 24 30  - movaps [rsp+30],xmm6",
+        "1408AE24E - 48 8B 0D F3AF6301  - mov rcx,[141EE9248]"
+      ],
+      "candidate_rva": "0x8AE240",
+      "candidate_address": "0x1408AE240",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "0e4317fa358acfd56e457d0fafad627870cbf19a091df962cd78228ab750603c",
+      "actual_target_sha256": "0e4317fa358acfd56e457d0fafad627870cbf19a091df962cd78228ab750603c"
+    },
+    {
+      "id": "functions.TransformVec3",
+      "group": "functions",
+      "match_rva": "0x1300BF0",
+      "match_address": "0x141300BF0",
+      "expected_code48": "48 83 EC 38 48 8B 44 24 68 4C 8B D1 F3 0F 10 12 F3 0F 10 5A 08 0F 28 C2 0F 29 74 24 20 0F 28 CB F3 0F 59 40 04 F3 0F 59 48 24 F3 0F 10 72 04 0F",
+      "actual_code48": "48 83 EC 38 48 8B 44 24 68 4C 8B D1 F3 0F 10 12 F3 0F 10 5A 08 0F 28 C2 0F 29 74 24 20 0F 28 CB F3 0F 59 40 04 F3 0F 59 48 24 F3 0F 10 72 04 0F",
+      "code_matches": true,
+      "code_disasm": [
+        "141300BF0 - 48 83 EC 38 - sub rsp,38",
+        "141300BF4 - 48 8B 44 24 68  - mov rax,[rsp+68]",
+        "141300BF9 - 4C 8B D1  - mov r10,rcx",
+        "141300BFC - F3 0F10 12  - movss xmm2,[rdx]",
+        "141300C00 - F3 0F10 5A 08  - movss xmm3,[rdx+08]"
+      ],
+      "candidate_rva": "0x1300BF0",
+      "candidate_address": "0x141300BF0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "ecae309b21d474423d8ede54599889194289592ef750e1e57e796f7ab54da2d2",
+      "actual_target_sha256": "ecae309b21d474423d8ede54599889194289592ef750e1e57e796f7ab54da2d2"
+    },
+    {
+      "id": "functions.TranslateString",
+      "group": "functions",
+      "match_rva": "0x1152CF0",
+      "match_address": "0x141152CF0",
+      "expected_code48": "40 53 48 83 EC 30 80 39 00 48 8B C1 8B D1 74 0B 48 FF C0 48 8B D0 80 38 00 75 F5 2B D1 48 89 4C 24 20 89 54 24 28 F6 C2 01 74 09 8D 42 01 89 44",
+      "actual_code48": "40 53 48 83 EC 30 80 39 00 48 8B C1 8B D1 74 0B 48 FF C0 48 8B D0 80 38 00 75 F5 2B D1 48 89 4C 24 20 89 54 24 28 F6 C2 01 74 09 8D 42 01 89 44",
+      "code_matches": true,
+      "code_disasm": [
+        "141152CF0 - 40 53 - push rbx",
+        "141152CF2 - 48 83 EC 30 - sub rsp,30",
+        "141152CF6 - 80 39 00 - cmp byte ptr [rcx],00",
+        "141152CF9 - 48 8B C1  - mov rax,rcx",
+        "141152CFC - 8B D1  - mov edx,ecx"
+      ],
+      "candidate_rva": "0x1152CF0",
+      "candidate_address": "0x141152CF0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "964c72801e25486b8da51a9bb6ae3ade7f3af34dcea9b17b979c5ed89f54775a",
+      "actual_target_sha256": "964c72801e25486b8da51a9bb6ae3ade7f3af34dcea9b17b979c5ed89f54775a"
+    },
+    {
+      "id": "functions.WorldToScreen",
+      "group": "functions",
+      "match_rva": "0x12FEDA0",
+      "match_address": "0x1412FEDA0",
+      "expected_code48": "48 83 EC 48 F3 0F 10 02 48 8D 41 08 F3 0F 10 4A 04 4D 8B D0 4C 8B 01 48 8D 4C 24 30 48 89 44 24 20 F3 41 0F 5C 00 F3 41 0F 5C 48 04 4D 8D 88 E4",
+      "actual_code48": "48 83 EC 48 F3 0F 10 02 48 8D 41 08 F3 0F 10 4A 04 4D 8B D0 4C 8B 01 48 8D 4C 24 30 48 89 44 24 20 F3 41 0F 5C 00 F3 41 0F 5C 48 04 4D 8D 88 E4",
+      "code_matches": true,
+      "code_disasm": [
+        "1412FEDA0 - 48 83 EC 48 - sub rsp,48",
+        "1412FEDA4 - F3 0F10 02  - movss xmm0,[rdx]",
+        "1412FEDA8 - 48 8D 41 08  - lea rax,[rcx+08]",
+        "1412FEDAC - F3 0F10 4A 04  - movss xmm1,[rdx+04]",
+        "1412FEDB1 - 4D 8B D0  - mov r10,r8"
+      ],
+      "candidate_rva": "0x12FEDA0",
+      "candidate_address": "0x1412FEDA0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "c5394e62ec46ed0cbd0b32b9bcf7ee839e1930983c8503b7582281f41a63cbfb",
+      "actual_target_sha256": "c5394e62ec46ed0cbd0b32b9bcf7ee839e1930983c8503b7582281f41a63cbfb"
+    },
+    {
+      "id": "functions.fieldOfView",
+      "group": "functions",
+      "match_rva": "0x6F4B75",
+      "match_address": "0x1406F4B75",
+      "expected_code48": "48 8D 15 7C 23 39 01 48 89 4C 24 30 41 B9 3C 00 00 00 48 8D 4C 24 50 48 89 4C 24 28 48 8D 4C 24 60 48 89 44 24 20 E8 A0 5C 9D 00 48 8B 44 24 78",
+      "actual_code48": "48 8D 15 7C 23 39 01 48 89 4C 24 30 41 B9 3C 00 00 00 48 8D 4C 24 50 48 89 4C 24 28 48 8D 4C 24 60 48 89 44 24 20 E8 A0 5C 9D 00 48 8B 44 24 78",
+      "code_matches": true,
+      "code_disasm": [
+        "1406F4B75 - 48 8D 15 7C233901  - lea rdx,[141A86EF8]",
+        "1406F4B7C - 48 89 4C 24 30  - mov [rsp+30],rcx",
+        "1406F4B81 - 41 B9 3C000000 - mov r9d,0000003C",
+        "1406F4B87 - 48 8D 4C 24 50  - lea rcx,[rsp+50]",
+        "1406F4B8C - 48 89 4C 24 28  - mov [rsp+28],rcx"
+      ],
+      "candidate_rva": "0x6F3841",
+      "candidate_address": "0x1406F3841",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "f575b6387fc6817b7240c235e6de19965b3c49b531b836b3a99c14cbf1bd1e0e",
+      "actual_target_sha256": "f575b6387fc6817b7240c235e6de19965b3c49b531b836b3a99c14cbf1bd1e0e"
+    },
+    {
+      "id": "functions.X3DDeviceD3D11_SetGraphicsPipeline",
+      "group": "functions",
+      "match_rva": "0x4BDA45",
+      "match_address": "0x1404BDA45",
+      "expected_code48": "44 88 44 24 18 53 55 57 41 54 41 55 41 56 41 57 48 83 EC 40 4C 8B 15 18 9A A5 01 49 8B E9 0F B6 CA 49 83 C2 08 8B D1 8B C1 48 C1 E8 06 83 E2 3F",
+      "actual_code48": "44 88 44 24 18 53 55 57 41 54 41 55 41 56 41 57 48 83 EC 40 4C 8B 15 18 9A A5 01 49 8B E9 0F B6 CA 49 83 C2 08 8B D1 8B C1 48 C1 E8 06 83 E2 3F",
+      "code_matches": true,
+      "code_disasm": [
+        "1404BDA45 - 44 88 44 24 18  - mov [rsp+18],r8b",
+        "1404BDA4A - 53 - push rbx",
+        "1404BDA4B - 55 - push rbp",
+        "1404BDA4C - 57 - push rdi",
+        "1404BDA4D - 41 54 - push r12"
+      ],
+      "candidate_rva": "0x4BDA40",
+      "candidate_address": "0x1404BDA40",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "66e7e7d7575dff09ac4eb178d959681bd8fcdaec198a804ad4b0900437ea6150",
+      "actual_target_sha256": "66e7e7d7575dff09ac4eb178d959681bd8fcdaec198a804ad4b0900437ea6150"
+    },
+    {
+      "id": "functions.X3DDeviceD3D11_CreateTexture2D",
+      "group": "functions",
+      "match_rva": "0x110ECA0",
+      "match_address": "0x14110ECA0",
+      "expected_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 30 48 8B F9 49 8B D9 49 8B C8 48 8B F2 E8 F0 BC FF FF 44 0F B6 44 24 68 4C 8B CB 44 88 44 24 28 48 8B",
+      "actual_code48": "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 30 48 8B F9 49 8B D9 49 8B C8 48 8B F2 E8 F0 BC FF FF 44 0F B6 44 24 68 4C 8B CB 44 88 44 24 28 48 8B",
+      "code_matches": true,
+      "code_disasm": [
+        "14110ECA0 - 48 89 5C 24 08  - mov [rsp+08],rbx",
+        "14110ECA5 - 48 89 74 24 10  - mov [rsp+10],rsi",
+        "14110ECAA - 57 - push rdi",
+        "14110ECAB - 48 83 EC 30 - sub rsp,30",
+        "14110ECAF - 48 8B F9  - mov rdi,rcx"
+      ],
+      "candidate_rva": "0x110ECA0",
+      "candidate_address": "0x14110ECA0",
+      "candidate_is_code": true,
+      "target_snapshot_matches": true,
+      "expected_target_sha256": "ea7d4983370f64fab584ea7b04190d7ce4aef624319400c257694fe712ba1bf2",
+      "actual_target_sha256": "ea7d4983370f64fab584ea7b04190d7ce4aef624319400c257694fe712ba1bf2"
+    },
+    {
+      "id": "structs.GameObject.fields.oModelScaleComponent",
+      "group": "structs",
+      "match_rva": "0x29B00F",
+      "match_address": "0x14029B00F",
+      "expected_code48": "48 8B B9 68 2C 00 00 C7 44 24 30 00 00 00 00 48 85 FF 74 2A 80 BF C8 00 00 00 00 74 21 48 8B BF A8 00 00 00 48 85 FF 74 06 FF 87 C8 01 00 00 48",
+      "actual_code48": "48 8B B9 68 2C 00 00 C7 44 24 30 00 00 00 00 48 85 FF 74 2A 80 BF C8 00 00 00 00 74 21 48 8B BF A8 00 00 00 48 85 FF 74 06 FF 87 C8 01 00 00 48",
+      "code_matches": true,
+      "code_disasm": [
+        "14029B00F - 48 8B B9 682C0000  - mov rdi,[rcx+00002C68]",
+        "14029B016 - C7 44 24 30 00000000 - mov [rsp+30],00000000",
+        "14029B01E - 48 85 FF  - test rdi,rdi",
+        "14029B021 - 74 2A - je 14029B04D",
+        "14029B023 - 80 BF C8000000 00 - cmp byte ptr [rdi+000000C8],00"
+      ]
+    },
+    {
+      "id": "structs.GameObject.fields.oSpellBook",
+      "group": "structs",
+      "match_rva": "0x20ED3D",
+      "match_address": "0x14020ED3D",
+      "expected_code48": "49 8D B5 00 31 00 00 48 89 00 48 89 40 08 48 89 40 10 66 C7 40 18 01 01 48 89 43 20 C6 43 30 01 4C 89 6B 38 48 C7 45 E7 00 00 00 00 E8 E2 05 F2",
+      "actual_code48": "49 8D B5 00 31 00 00 48 89 00 48 89 40 08 48 89 40 10 66 C7 40 18 01 01 48 89 43 20 C6 43 30 01 4C 89 6B 38 48 C7 45 E7 00 00 00 00 E8 E2 05 F2",
+      "code_matches": true,
+      "code_disasm": [
+        "14020ED3D - 49 8D B5 00310000  - lea rsi,[r13+00003100]",
+        "14020ED44 - 48 89 00  - mov [rax],rax",
+        "14020ED47 - 48 89 40 08  - mov [rax+08],rax",
+        "14020ED4B - 48 89 40 10  - mov [rax+10],rax",
+        "14020ED4F - 66 C7 40 18 0101 - mov word ptr [rax+18],0101"
+      ]
+    },
+    {
+      "id": "structs.GameObject.fields.oItemList",
+      "group": "structs",
+      "match_rva": "0x2FC938",
+      "match_address": "0x1402FC938",
+      "expected_code48": "48 8B 81 00 43 00 00 4C 8B F1 0F 29 74 24 70 48 81 C1 00 43 00 00 44 0F 29 44 24 60 FF 50 10 48 8B 0D EA C8 BE 01 48 8B F8 48 89 45 40 48 8B 49",
+      "actual_code48": "48 8B 81 00 43 00 00 4C 8B F1 0F 29 74 24 70 48 81 C1 00 43 00 00 44 0F 29 44 24 60 FF 50 10 48 8B 0D EA C8 BE 01 48 8B F8 48 89 45 40 48 8B 49",
+      "code_matches": true,
+      "code_disasm": [
+        "1402FC938 - 48 8B 81 00430000  - mov rax,[rcx+00004300]",
+        "1402FC93F - 4C 8B F1  - mov r14,rcx",
+        "1402FC942 - 0F29 74 24 70  - movaps [rsp+70],xmm6",
+        "1402FC947 - 48 81 C1 00430000 - add rcx,00004300",
+        "1402FC94E - 44 0F29 44 24 60  - movaps [rsp+60],xmm8"
+      ]
+    },
+    {
+      "id": "structs.GameObject.fields.EvolvePoints",
+      "group": "structs",
+      "match_rva": "0xEE32DF",
+      "match_address": "0x140EE32DF",
+      "expected_code48": "4C 8D 83 08 09 00 00 48 8D 15 E3 73 B5 00 48 8B CF FF 50 08 48 8B 07 4C 8D 83 28 09 00 00 48 8D 15 1C C0 C2 00 48 8B CF FF 50 08 48 8B 07 4C 8D",
+      "actual_code48": "4C 8D 83 08 09 00 00 48 8D 15 E3 73 B5 00 48 8B CF FF 50 08 48 8B 07 4C 8D 83 28 09 00 00 48 8D 15 1C C0 C2 00 48 8B CF FF 50 08 48 8B 07 4C 8D",
+      "code_matches": true,
+      "code_disasm": [
+        "140EE32DF - 4C 8D 83 08090000  - lea r8,[rbx+00000908]",
+        "140EE32E6 - 48 8D 15 E373B500  - lea rdx,[141A3A6D0]",
+        "140EE32ED - 48 8B CF  - mov rcx,rdi",
+        "140EE32F0 - FF 50 08  - call qword ptr [rax+08]",
+        "140EE32F3 - 48 8B 07  - mov rax,[rdi]"
+      ]
+    },
+    {
+      "id": "structs.AIBaseClient.fields.oCombatStats",
+      "group": "structs",
+      "match_rva": "0x594CB1",
+      "match_address": "0x140594CB1",
+      "expected_code48": "4C 8D 8F 88 42 00 00 41 0F B6 51 15 45 33 C0 41 8B C8 F3 44 0F 10 68 10 41 0F B6 41 17 F3 41 0F 10 44 81 04 F3 0F 11 44 24 20 48 85 D2 0F 84 F0",
+      "actual_code48": "4C 8D 8F 88 42 00 00 41 0F B6 51 15 45 33 C0 41 8B C8 F3 44 0F 10 68 10 41 0F B6 41 17 F3 41 0F 10 44 81 04 F3 0F 11 44 24 20 48 85 D2 0F 84 F0",
+      "code_matches": true,
+      "code_disasm": [
+        "140594CB1 - 4C 8D 8F 88420000  - lea r9,[rdi+00004288]",
+        "140594CB8 - 41 0FB6 51 15  - movzx edx,byte ptr [r9+15]",
+        "140594CBD - 45 33 C0  - xor r8d,r8d",
+        "140594CC0 - 41 8B C8  - mov ecx,r8d",
+        "140594CC3 - F3 44 0F10 68 10  - movss xmm13,[rax+10]"
+      ]
+    },
+    {
+      "id": "structs.AIBaseClient.fields.oCharacterDataStack",
+      "group": "structs",
+      "match_rva": "0x27BD25",
+      "match_address": "0x14027BD25",
+      "expected_code48": "48 8D 8B 70 12 00 00 E8 BF 40 EC 00 48 8D 8B 48 12 00 00 E8 B3 40 EC 00 48 8D 8B 20 12 00 00 E8 A7 40 EC 00 48 8D 8B F8 11 00 00 E8 9B 40 EC 00",
+      "actual_code48": "48 8D 8B 70 12 00 00 E8 BF 40 EC 00 48 8D 8B 48 12 00 00 E8 B3 40 EC 00 48 8D 8B 20 12 00 00 E8 A7 40 EC 00 48 8D 8B F8 11 00 00 E8 9B 40 EC 00",
+      "code_matches": true,
+      "code_disasm": [
+        "14027BD25 - 48 8D 8B 70120000  - lea rcx,[rbx+00001270]",
+        "14027BD2C - E8 BF40EC00 - call 14113FDF0",
+        "14027BD31 - 48 8D 8B 48120000  - lea rcx,[rbx+00001248]",
+        "14027BD38 - E8 B340EC00 - call 14113FDF0",
+        "14027BD3D - 48 8D 8B 20120000  - lea rcx,[rbx+00001220]"
+      ]
+    },
+    {
+      "id": "structs.AIBaseClient.fields.oPetOwner",
+      "group": "structs",
+      "match_rva": "0x34E8AA",
+      "match_address": "0x14034E8AA",
+      "expected_code48": "8B 99 A0 4B 00 00 48 8B F9 85 DB 74 2A 48 8B 0D 22 D4 BD 01 48 85 C9 74 11 48 81 C1 88 02 00 00 48 8B 01 FF 50 28 3B 18 74 0D 32 C0 48 8B 5C 24",
+      "actual_code48": "8B 99 A0 4B 00 00 48 8B F9 85 DB 74 2A 48 8B 0D 22 D4 BD 01 48 85 C9 74 11 48 81 C1 88 02 00 00 48 8B 01 FF 50 28 3B 18 74 0D 32 C0 48 8B 5C 24",
+      "code_matches": true,
+      "code_disasm": [
+        "14034E8AA - 8B 99 A04B0000  - mov ebx,[rcx+00004BA0]",
+        "14034E8B0 - 48 8B F9  - mov rdi,rcx",
+        "14034E8B3 - 85 DB  - test ebx,ebx",
+        "14034E8B5 - 74 2A - je 14034E8E1",
+        "14034E8B7 - 48 8B 0D 22D4BD01  - mov rcx,[141F2BCE0]"
+      ]
+    },
+    {
+      "id": "structs.AIBaseClient.fields.SkinId",
+      "group": "structs",
+      "match_rva": "0x28DFFA",
+      "match_address": "0x14028DFFA",
+      "expected_code48": "88 86 14 13 00 00 48 89 45 A7 0F B6 45 A8 88 86 15 13 00 00 0F B6 45 A9 88 86 16 13 00 00 0F B6 45 AA 88 86 17 13 00 00 40 88 BE 2B 13 00 00 C6",
+      "actual_code48": "88 86 14 13 00 00 48 89 45 A7 0F B6 45 A8 88 86 15 13 00 00 0F B6 45 A9 88 86 16 13 00 00 0F B6 45 AA 88 86 17 13 00 00 40 88 BE 2B 13 00 00 C6",
+      "code_matches": true,
+      "code_disasm": [
+        "14028DFFA - 88 86 14130000  - mov [rsi+00001314],al",
+        "14028E000 - 48 89 45 A7  - mov [rbp-59],rax",
+        "14028E004 - 0FB6 45 A8  - movzx eax,byte ptr [rbp-58]",
+        "14028E008 - 88 86 15130000  - mov [rsi+00001315],al",
+        "14028E00E - 0FB6 45 A9  - movzx eax,byte ptr [rbp-57]"
+      ]
+    },
+    {
+      "id": "structs.AIBaseClient.fields.LookupMap",
+      "group": "structs",
+      "match_rva": "0x53E0",
+      "match_address": "0x1400053E0",
+      "expected_code48": "4D 8B 59 38 45 8B 13 4E 8D 14 16 4C 39 D3 72 2F 49 8B 80 98 00 00 00 45 8B 53 04 4E 8D 14 16 4C 39 D3 73 1B 48 8D 70 10 49 8D B8 00 02 00 00 B9",
+      "actual_code48": "4D 8B 59 38 45 8B 13 4E 8D 14 16 4C 39 D3 72 2F 49 8B 80 98 00 00 00 45 8B 53 04 4E 8D 14 16 4C 39 D3 73 1B 48 8D 70 10 49 8D B8 00 02 00 00 B9",
+      "code_matches": true,
+      "code_disasm": [
+        "1400053E0 - 4D 8B 59 38  - mov r11,[r9+38]",
+        "1400053E4 - 45 8B 13  - mov r10d,[r11]",
+        "1400053E7 - 4E 8D 14 16   - lea r10,[rsi+r10]",
+        "1400053EB - 4C 39 D3  - cmp rbx,r10",
+        "1400053EE - 72 2F - jb 14000541F"
+      ]
+    },
+    {
+      "id": "structs.AIBaseClient.fields.StacksCount",
+      "group": "structs",
+      "match_rva": "0x53E0",
+      "match_address": "0x1400053E0",
+      "expected_code48": "4D 8B 59 38 45 8B 13 4E 8D 14 16 4C 39 D3 72 2F 49 8B 80 98 00 00 00 45 8B 53 04 4E 8D 14 16 4C 39 D3 73 1B 48 8D 70 10 49 8D B8 00 02 00 00 B9",
+      "actual_code48": "4D 8B 59 38 45 8B 13 4E 8D 14 16 4C 39 D3 72 2F 49 8B 80 98 00 00 00 45 8B 53 04 4E 8D 14 16 4C 39 D3 73 1B 48 8D 70 10 49 8D B8 00 02 00 00 B9",
+      "code_matches": true,
+      "code_disasm": [
+        "1400053E0 - 4D 8B 59 38  - mov r11,[r9+38]",
+        "1400053E4 - 45 8B 13  - mov r10d,[r11]",
+        "1400053E7 - 4E 8D 14 16   - lea r10,[rsi+r10]",
+        "1400053EB - 4C 39 D3  - cmp rbx,r10",
+        "1400053EE - 72 2F - jb 14000541F"
+      ]
+    },
+    {
+      "id": "structs.AIBaseClient.fields.StateArrayBegin",
+      "group": "structs",
+      "match_rva": "0x4797",
+      "match_address": "0x140004797",
+      "expected_code48": "66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90 90 90 90 90 90 90 90 90 E8 1B 08 00 00 66 44",
+      "actual_code48": "66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90 90 90 90 90 90 90 90 90 E8 1B 08 00 00 66 44",
+      "code_matches": true,
+      "code_disasm": [
+        "140004797 - 66 41 0F6F 42 70  - movdqa xmm0,[r10+70]",
+        "14000479D - 66 41 0F6F 93 A0FEFFFF  - movdqa xmm2,[r11-00000160]",
+        "1400047A6 - 66 0F3800 C3  - pshufb xmm0,xmm3",
+        "1400047AB - 66 0FEF C4  - pxor xmm0,xmm4",
+        "1400047AF - 66 0F3800 C2  - pshufb xmm0,xmm2"
+      ]
+    },
+    {
+      "id": "structs.AIBaseClient.fields.Type",
+      "group": "structs",
+      "match_rva": "0x41DE",
+      "match_address": "0x1400041DE",
+      "expected_code48": "89 4F 0C 41 0F BA E1 1B 73 20 31 C9 0F 01 D0 25 E6 00 00 00 3D E6 00 00 00 74 1F 81 67 08 FF FF DE 3F 83 E0 06 83 F8 06 74 10 B8 FF E7 FF EF 41",
+      "actual_code48": "89 4F 0C 41 0F BA E1 1B 73 20 31 C9 0F 01 D0 25 E6 00 00 00 3D E6 00 00 00 74 1F 81 67 08 FF FF DE 3F 83 E0 06 83 F8 06 74 10 B8 FF E7 FF EF 41",
+      "code_matches": true,
+      "code_disasm": [
+        "1400041DE - 89 4F 0C  - mov [rdi+0C],ecx",
+        "1400041E1 - 41 0FBA E1 1B - bt r9d,1B",
+        "1400041E6 - 73 20 - jae 140004208",
+        "1400041E8 - 31 C9  - xor ecx,ecx",
+        "1400041EA - 0F01D0 - xgetbv "
+      ]
+    },
+    {
+      "id": "structs.CombatStats.fields.mAttackSpeedMod",
+      "group": "structs",
+      "match_rva": "0x128283F",
+      "match_address": "0x14128283F",
+      "expected_code48": "F3 0F 10 81 A8 01 00 00 0F 57 DB 0F 2E C3 0F 8A C7 00 00 00 0F 85 C1 00 00 00 48 83 B9 A0 01 00 00 00 0F 85 B3 00 00 00 F3 0F 10 81 98 01 00 00",
+      "actual_code48": "F3 0F 10 81 A8 01 00 00 0F 57 DB 0F 2E C3 0F 8A C7 00 00 00 0F 85 C1 00 00 00 48 83 B9 A0 01 00 00 00 0F 85 B3 00 00 00 F3 0F 10 81 98 01 00 00",
+      "code_matches": true,
+      "code_disasm": [
+        "14128283F - F3 0F10 81 A8010000  - movss xmm0,[rcx+000001A8]",
+        "141282847 - 0F57 DB  - xorps xmm3,xmm3",
+        "14128284A - 0F2E C3  - ucomiss xmm0,xmm3",
+        "14128284D - 0F8A C7000000 - jp 14128291A",
+        "141282853 - 0F85 C1000000 - jne 14128291A"
+      ]
+    },
+    {
+      "id": "structs.CombatStats.fields.mCrit",
+      "group": "structs",
+      "match_rva": "0x12BA256",
+      "match_address": "0x1412BA256",
+      "expected_code48": "F3 0F 10 81 C8 01 00 00 48 8B CB F3 0F 11 44 24 40 F3 44 0F 11 4C 24 38 F3 44 0F 11 54 24 3C F3 44 0F 11 5C 24 44 E8 1F 4A 00 00 44 0F B6 C7 48",
+      "actual_code48": "F3 0F 10 81 C8 01 00 00 48 8B CB F3 0F 11 44 24 40 F3 44 0F 11 4C 24 38 F3 44 0F 11 54 24 3C F3 44 0F 11 5C 24 44 E8 1F 4A 00 00 44 0F B6 C7 48",
+      "code_matches": true,
+      "code_disasm": [
+        "1412BA256 - F3 0F10 81 C8010000  - movss xmm0,[rcx+000001C8]",
+        "1412BA25E - 48 8B CB  - mov rcx,rbx",
+        "1412BA261 - F3 0F11 44 24 40  - movss [rsp+40],xmm0",
+        "1412BA267 - F3 44 0F11 4C 24 38  - movss [rsp+38],xmm9",
+        "1412BA26E - F3 44 0F11 54 24 3C  - movss [rsp+3C],xmm10"
+      ]
+    },
+    {
+      "id": "structs.CombatStats.fields.mBonusSpellBlock",
+      "group": "structs",
+      "match_rva": "0x1195729",
+      "match_address": "0x141195729",
+      "expected_code48": "F3 0F 10 81 00 02 00 00 F3 0F 5C 81 04 02 00 00 F3 0F 59 81 08 02 00 00 0F 2F F8 72 0A 0F 2F C6 72 05 E8 40 63 FF FF FF C6 48 83 C3 08 3B F5 72",
+      "actual_code48": "F3 0F 10 81 00 02 00 00 F3 0F 5C 81 04 02 00 00 F3 0F 59 81 08 02 00 00 0F 2F F8 72 0A 0F 2F C6 72 05 E8 40 63 FF FF FF C6 48 83 C3 08 3B F5 72",
+      "code_matches": true,
+      "code_disasm": [
+        "141195729 - F3 0F10 81 00020000  - movss xmm0,[rcx+00000200]",
+        "141195731 - F3 0F5C 81 04020000  - subss xmm0,[rcx+00000204]",
+        "141195739 - F3 0F59 81 08020000  - mulss xmm0,[rcx+00000208]",
+        "141195741 - 0F2F F8  - comiss xmm7,xmm0",
+        "141195744 - 72 0A - jb 141195750"
+      ]
+    },
+    {
+      "id": "structs.CombatStats.fields.mCombatType",
+      "group": "structs",
+      "match_rva": "0x14FE086",
+      "match_address": "0x1414FE086",
+      "expected_code48": "8B 81 04 02 00 00 41 8B C0 48 C1 E0 05 48 05 F4 01 00 00 45 85 C0 74 59 49 03 C1 0F 1F 40 00 66 66 66 0F 1F 84 00 00 00 00 00 45 8B 99 1C 08 00",
+      "actual_code48": "8B 81 04 02 00 00 41 8B C0 48 C1 E0 05 48 05 F4 01 00 00 45 85 C0 74 59 49 03 C1 0F 1F 40 00 66 66 66 0F 1F 84 00 00 00 00 00 45 8B 99 1C 08 00",
+      "code_matches": true,
+      "code_disasm": [
+        "1414FE086 - 8B 81 04020000  - mov eax,[rcx+00000204]",
+        "1414FE08C - 41 8B C0  - mov eax,r8d",
+        "1414FE08F - 48 C1 E0 05 - shl rax,05",
+        "1414FE093 - 48 05 F4010000 - add rax,000001F4",
+        "1414FE099 - 45 85 C0  - test r8d,r8d"
+      ]
+    },
+    {
+      "id": "structs.MissileClient.fields.CastInfoBase",
+      "group": "structs",
+      "match_rva": "0x3D354",
+      "match_address": "0x14003D354",
+      "expected_code48": "62 71 7E 48 7F 5F 0B 62 71 15 48 EF 6E 0C 62 71 2D 48 EF 56 0D 62 71 05 48 EF 7E 0E 62 71 1D 48 EF 66 0F 48 8D B6 00 04 00 00 62 71 7E 48 7F 6F",
+      "actual_code48": "62 71 7E 48 7F 5F 0B 62 71 15 48 EF 6E 0C 62 71 2D 48 EF 56 0D 62 71 05 48 EF 7E 0E 62 71 1D 48 EF 66 0F 48 8D B6 00 04 00 00 62 71 7E 48 7F 6F",
+      "code_matches": true,
+      "code_disasm": [
+        "14003D354 - 62 71 7E  - bound esi,[rcx+7E]",
+        "14003D357 - 48 7F 5F - jg 14003D3B9",
+        "14003D35A - 0B 62 71  - or esp,[rdx+71]",
+        "14003D35D - 15 48EF6E0C - adc eax,0C6EEF48",
+        "14003D362 - 62 71 2D  - bound esi,[rcx+2D]"
+      ]
+    },
+    {
+      "id": "structs.SpellSlot.fields.oChargeStartTime",
+      "group": "structs",
+      "match_rva": "0x18E2C",
+      "match_address": "0x140018E2C",
+      "expected_code48": "8B 5E 74 41 81 C0 05 E9 E3 A9 45 31 D4 0F B6 C0 89 56 70 45 01 E0 00 D9 41 C1 C0 05 45 89 CC 66 0F C4 04 87 06 45 01 C8 8B 14 8F 45 31 C4 89 1C",
+      "actual_code48": "8B 5E 74 41 81 C0 05 E9 E3 A9 45 31 D4 0F B6 C0 89 56 70 45 01 E0 00 D9 41 C1 C0 05 45 89 CC 66 0F C4 04 87 06 45 01 C8 8B 14 8F 45 31 C4 89 1C",
+      "code_matches": true,
+      "code_disasm": [
+        "140018E2C - 8B 5E 74  - mov ebx,[rsi+74]",
+        "140018E2F - 41 81 C0 05E9E3A9 - add r8d,A9E3E905",
+        "140018E36 - 45 31 D4  - xor r12d,r10d",
+        "140018E39 - 0FB6 C0  - movzx eax,al",
+        "140018E3C - 89 56 70  - mov [rsi+70],edx"
+      ]
+    },
+    {
+      "id": "structs.SpellBook.fields.oSpellSlots",
+      "group": "structs",
+      "match_rva": "0x916C31",
+      "match_address": "0x140916C31",
+      "expected_code48": "48 8B 81 E0 0A 00 00 C3 CC CC CC CC CC CC CC 48 89 5C 24 10 48 89 6C 24 18 56 48 83 EC 20 48 8B 1D 62 26 5D 01 48 8B F1 48 8B CA E8 0F 57 B2 FF",
+      "actual_code48": "48 8B 81 E0 0A 00 00 C3 CC CC CC CC CC CC CC 48 89 5C 24 10 48 89 6C 24 18 56 48 83 EC 20 48 8B 1D 62 26 5D 01 48 8B F1 48 8B CA E8 0F 57 B2 FF",
+      "code_matches": true,
+      "code_disasm": [
+        "140916C31 - 48 8B 81 E00A0000  - mov rax,[rcx+00000AE0]",
+        "140916C38 - C3 - ret ",
+        "140916C39 - CC - int 3 ",
+        "140916C3A - CC - int 3 ",
+        "140916C3B - CC - int 3 "
+      ]
+    },
+    {
+      "id": "structs.SpellBook.fields.ActiveSpellCast",
+      "group": "structs",
+      "match_rva": "0x53E0",
+      "match_address": "0x1400053E0",
+      "expected_code48": "4D 8B 59 38 45 8B 13 4E 8D 14 16 4C 39 D3 72 2F 49 8B 80 98 00 00 00 45 8B 53 04 4E 8D 14 16 4C 39 D3 73 1B 48 8D 70 10 49 8D B8 00 02 00 00 B9",
+      "actual_code48": "4D 8B 59 38 45 8B 13 4E 8D 14 16 4C 39 D3 72 2F 49 8B 80 98 00 00 00 45 8B 53 04 4E 8D 14 16 4C 39 D3 73 1B 48 8D 70 10 49 8D B8 00 02 00 00 B9",
+      "code_matches": true,
+      "code_disasm": [
+        "1400053E0 - 4D 8B 59 38  - mov r11,[r9+38]",
+        "1400053E4 - 45 8B 13  - mov r10d,[r11]",
+        "1400053E7 - 4E 8D 14 16   - lea r10,[rsi+r10]",
+        "1400053EB - 4C 39 D3  - cmp rbx,r10",
+        "1400053EE - 72 2F - jb 14000541F"
+      ]
+    },
+    {
+      "id": "structs.SpellBook.fields.MaxSlots",
+      "group": "structs",
+      "match_rva": "0x460E",
+      "match_address": "0x14000460E",
+      "expected_code48": "66 43 0F 6F 4C 13 40 66 0F EF C4 66 0F 38 00 C1 F3 C3 49 89 D1 8B 82 F0 00 00 00 66 41 0F 6F C9 66 0F 6F 15 5A 0C 00 00 66 0F DF C8 49 89 C3 66",
+      "actual_code48": "66 43 0F 6F 4C 13 40 66 0F EF C4 66 0F 38 00 C1 F3 C3 49 89 D1 8B 82 F0 00 00 00 66 41 0F 6F C9 66 0F 6F 15 5A 0C 00 00 66 0F DF C8 49 89 C3 66",
+      "code_matches": true,
+      "code_disasm": [
+        "14000460E - 66 43 0F6F 4C 13 40  - movdqa xmm1,[r11+r10+40]",
+        "140004615 - 66 0FEF C4  - pxor xmm0,xmm4",
+        "140004619 - 66 0F3800 C1  - pshufb xmm0,xmm1",
+        "14000461E - F3 C3 - repe ret ",
+        "140004620 - 49 89 D1  - mov r9,rdx"
+      ]
+    },
+    {
+      "id": "structs.SpellData.fields.InfoOwnerSlot",
+      "group": "structs",
+      "match_rva": "0x4788",
+      "match_address": "0x140004788",
+      "expected_code48": "66 41 0F 6F 62 60 66 0F 38 00 E2 66 0F EF E0 66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90",
+      "actual_code48": "66 41 0F 6F 62 60 66 0F 38 00 E2 66 0F EF E0 66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90",
+      "code_matches": true,
+      "code_disasm": [
+        "140004788 - 66 41 0F6F 62 60  - movdqa xmm4,[r10+60]",
+        "14000478E - 66 0F3800 E2  - pshufb xmm4,xmm2",
+        "140004793 - 66 0FEF E0  - pxor xmm4,xmm0",
+        "140004797 - 66 41 0F6F 42 70  - movdqa xmm0,[r10+70]",
+        "14000479D - 66 41 0F6F 93 A0FEFFFF  - movdqa xmm2,[r11-00000160]"
+      ]
+    },
+    {
+      "id": "structs.SpellData.fields.ResourceData",
+      "group": "structs",
+      "match_rva": "0x4788",
+      "match_address": "0x140004788",
+      "expected_code48": "66 41 0F 6F 62 60 66 0F 38 00 E2 66 0F EF E0 66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90",
+      "actual_code48": "66 41 0F 6F 62 60 66 0F 38 00 E2 66 0F EF E0 66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90",
+      "code_matches": true,
+      "code_disasm": [
+        "140004788 - 66 41 0F6F 62 60  - movdqa xmm4,[r10+60]",
+        "14000478E - 66 0F3800 E2  - pshufb xmm4,xmm2",
+        "140004793 - 66 0FEF E0  - pxor xmm4,xmm0",
+        "140004797 - 66 41 0F6F 42 70  - movdqa xmm0,[r10+70]",
+        "14000479D - 66 41 0F6F 93 A0FEFFFF  - movdqa xmm2,[r11-00000160]"
+      ]
+    },
+    {
+      "id": "structs.SpellDataResource.fields.DataResourceBase",
+      "group": "structs",
+      "match_rva": "0x4788",
+      "match_address": "0x140004788",
+      "expected_code48": "66 41 0F 6F 62 60 66 0F 38 00 E2 66 0F EF E0 66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90",
+      "actual_code48": "66 41 0F 6F 62 60 66 0F 38 00 E2 66 0F EF E0 66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90",
+      "code_matches": true,
+      "code_disasm": [
+        "140004788 - 66 41 0F6F 62 60  - movdqa xmm4,[r10+60]",
+        "14000478E - 66 0F3800 E2  - pshufb xmm4,xmm2",
+        "140004793 - 66 0FEF E0  - pxor xmm4,xmm0",
+        "140004797 - 66 41 0F6F 42 70  - movdqa xmm0,[r10+70]",
+        "14000479D - 66 41 0F6F 93 A0FEFFFF  - movdqa xmm2,[r11-00000160]"
+      ]
+    },
+    {
+      "id": "structs.NavGrid.fields.CellCenterOffset",
+      "group": "structs",
+      "match_rva": "0x1F11B6",
+      "match_address": "0x1401F11B6",
+      "expected_code48": "49 8D 91 18 07 00 00 4C 8B 0A 48 8B 52 08 49 8B 43 08 4C 39 88 30 07 00 00 75 09 48 39 90 38 07 00 00 74 1C 48 8D 7A 08 48 85 FF 75 1A 0F B6 06",
+      "actual_code48": "49 8D 91 18 07 00 00 4C 8B 0A 48 8B 52 08 49 8B 43 08 4C 39 88 30 07 00 00 75 09 48 39 90 38 07 00 00 74 1C 48 8D 7A 08 48 85 FF 75 1A 0F B6 06",
+      "code_matches": true,
+      "code_disasm": [
+        "1401F11B6 - 49 8D 91 18070000  - lea rdx,[r9+00000718]",
+        "1401F11BD - 4C 8B 0A  - mov r9,[rdx]",
+        "1401F11C0 - 48 8B 52 08  - mov rdx,[rdx+08]",
+        "1401F11C4 - 49 8B 43 08  - mov rax,[r11+08]",
+        "1401F11C8 - 4C 39 88 30070000  - cmp [rax+00000730],r9"
+      ]
+    },
+    {
+      "id": "structs.NavGrid.fields.CellFlagBuilding",
+      "group": "structs",
+      "match_rva": "0x460E",
+      "match_address": "0x14000460E",
+      "expected_code48": "66 43 0F 6F 4C 13 40 66 0F EF C4 66 0F 38 00 C1 F3 C3 49 89 D1 8B 82 F0 00 00 00 66 41 0F 6F C9 66 0F 6F 15 5A 0C 00 00 66 0F DF C8 49 89 C3 66",
+      "actual_code48": "66 43 0F 6F 4C 13 40 66 0F EF C4 66 0F 38 00 C1 F3 C3 49 89 D1 8B 82 F0 00 00 00 66 41 0F 6F C9 66 0F 6F 15 5A 0C 00 00 66 0F DF C8 49 89 C3 66",
+      "code_matches": true,
+      "code_disasm": [
+        "14000460E - 66 43 0F6F 4C 13 40  - movdqa xmm1,[r11+r10+40]",
+        "140004615 - 66 0FEF C4  - pxor xmm0,xmm4",
+        "140004619 - 66 0F3800 C1  - pshufb xmm0,xmm1",
+        "14000461E - F3 C3 - repe ret ",
+        "140004620 - 49 89 D1  - mov r9,rdx"
+      ]
+    },
+    {
+      "id": "structs.NavGrid.fields.CellFlagWall",
+      "group": "structs",
+      "match_rva": "0x6602",
+      "match_address": "0x140006602",
+      "expected_code48": "49 8D 50 02 0F C8 0F CA 31 E8 31 EA 66 0F 3A 22 D8 03 49 8D 40 03 66 0F 7F 5C 24 10 66 0F 3A 22 E2 03 0F C8 4C 89 D2 4D 8D 50 04 66 0F 7F 64 24",
+      "actual_code48": "49 8D 50 02 0F C8 0F CA 31 E8 31 EA 66 0F 3A 22 D8 03 49 8D 40 03 66 0F 7F 5C 24 10 66 0F 3A 22 E2 03 0F C8 4C 89 D2 4D 8D 50 04 66 0F 7F 64 24",
+      "code_matches": true,
+      "code_disasm": [
+        "140006602 - 49 8D 50 02  - lea rdx,[r8+02]",
+        "140006606 - 0FC8 - bswap eax",
+        "140006608 - 0FCA - bswap edx",
+        "14000660A - 31 E8  - xor eax,ebp",
+        "14000660C - 31 EA  - xor edx,ebp"
+      ]
+    },
+    {
+      "id": "structs.SpellCastInfo.fields.HASHMAP_OFF_SENTINEL",
+      "group": "structs",
+      "match_rva": "0x4797",
+      "match_address": "0x140004797",
+      "expected_code48": "66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90 90 90 90 90 90 90 90 90 E8 1B 08 00 00 66 44",
+      "actual_code48": "66 41 0F 6F 42 70 66 41 0F 6F 93 A0 FE FF FF 66 0F 38 00 C3 66 0F EF C4 66 0F 38 00 C2 F3 C3 90 90 90 90 90 90 90 90 90 90 E8 1B 08 00 00 66 44",
+      "code_matches": true,
+      "code_disasm": [
+        "140004797 - 66 41 0F6F 42 70  - movdqa xmm0,[r10+70]",
+        "14000479D - 66 41 0F6F 93 A0FEFFFF  - movdqa xmm2,[r11-00000160]",
+        "1400047A6 - 66 0F3800 C3  - pshufb xmm0,xmm3",
+        "1400047AB - 66 0FEF C4  - pxor xmm0,xmm4",
+        "1400047AF - 66 0F3800 C2  - pshufb xmm0,xmm2"
+      ]
+    },
+    {
+      "id": "structs.CharacterDataStack.fields.ActiveSkinId",
+      "group": "structs",
+      "match_rva": "0x53E0",
+      "match_address": "0x1400053E0",
+      "expected_code48": "4D 8B 59 38 45 8B 13 4E 8D 14 16 4C 39 D3 72 2F 49 8B 80 98 00 00 00 45 8B 53 04 4E 8D 14 16 4C 39 D3 73 1B 48 8D 70 10 49 8D B8 00 02 00 00 B9",
+      "actual_code48": "4D 8B 59 38 45 8B 13 4E 8D 14 16 4C 39 D3 72 2F 49 8B 80 98 00 00 00 45 8B 53 04 4E 8D 14 16 4C 39 D3 73 1B 48 8D 70 10 49 8D B8 00 02 00 00 B9",
+      "code_matches": true,
+      "code_disasm": [
+        "1400053E0 - 4D 8B 59 38  - mov r11,[r9+38]",
+        "1400053E4 - 45 8B 13  - mov r10d,[r11]",
+        "1400053E7 - 4E 8D 14 16   - lea r10,[rsi+r10]",
+        "1400053EB - 4C 39 D3  - cmp rbx,r10",
+        "1400053EE - 72 2F - jb 14000541F"
+      ]
+    }
+  ],
+  "runtime_snapshot": {
+    "observed_at": "2026-10-19T09:43:07Z",
+    "module_base_at_capture": "0x140000000",
+    "player_at_capture": "0xB7D47E40",
+    "fields": [
+      {
+        "id": "structs.GameObject.oHealth",
+        "offset": "0x1060",
+        "type": "float",
+        "value": 665.0,
+        "expected": 665,
+        "ce_read_address": "0xB7D48EA0",
+        "ce_bytes": "00 40 26 44 00 00 00 00 20 6A 54 00 96 A7 0A 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D48E80",
+        "window65": "03 00 03 00 00 00 20 20 00 00 00 00 00 00 00 00 00 FC 00 00 FF 00 00 00 00 00 00 00 00 00 00 00 00 40 26 44 00 00 00 00 20 6A 54 00 96 A7 0A 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "生命值与 Live Client Data API 的 currentHealth 交叉核对"
+      },
+      {
+        "id": "structs.GameObject.oMaxHealth",
+        "offset": "0x1088",
+        "type": "float",
+        "value": 665.0,
+        "expected": 665,
+        "ce_read_address": "0xB7D48EC8",
+        "ce_bytes": "00 40 26 44 01 00 00 00 20 FF FF FF FF FF FF FF 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D48EA8",
+        "window65": "20 6A 54 00 96 A7 0A 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 40 26 44 01 00 00 00 20 FF FF FF FF FF FF FF 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "最大生命值与 Live Client Data API 的 maxHealth 交叉核对"
+      },
+      {
+        "id": "structs.GameObject.oMana",
+        "offset": "0x340",
+        "type": "float",
+        "value": 320.0,
+        "expected": 320,
+        "ce_read_address": "0xB7D48180",
+        "ce_bytes": "00 00 A0 43 0F 00 00 00 20 6A 54 00 96 A7 0A 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D48160",
+        "window65": "05 00 05 00 01 00 04 02 C4 94 5F 2E 00 00 00 00 3B 6B A0 D1 FF 00 00 00 00 73 58 26 01 00 04 01 00 00 A0 43 0F 00 00 00 20 6A 54 00 96 A7 0A 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "当前法力值与 Live Client Data API 的 resourceValue 交叉核对"
+      },
+      {
+        "id": "structs.GameObject.oMaxMana",
+        "offset": "0x368",
+        "type": "float",
+        "value": 320.0,
+        "expected": 320,
+        "ce_read_address": "0xB7D481A8",
+        "ce_bytes": "00 00 A0 43 10 00 00 00 20 FF FF FF FF FF FF FF 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D48188",
+        "window65": "20 6A 54 00 96 A7 0A 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A0 43 10 00 00 00 20 FF FF FF FF FF FF FF 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "最大法力值与 Live Client Data API 的 resourceMax 交叉核对"
+      },
+      {
+        "id": "structs.GameObject.oArmor",
+        "offset": "0x2078",
+        "type": "float",
+        "value": 24.0,
+        "expected": 24,
+        "ce_read_address": "0xB7D49EB8",
+        "ce_bytes": "00 00 C0 41 07 00 00 00 04 A9 D8 98 D7 75 24 40 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D49E98",
+        "window65": "08 00 00 00 00 00 00 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C0 41 07 00 00 00 04 A9 D8 98 D7 75 24 40 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "护甲与 Live Client Data API 的 armor 交叉核对"
+      },
+      {
+        "id": "structs.GameObject.oMagicResist",
+        "offset": "0x20C8",
+        "type": "float",
+        "value": 33.0,
+        "expected": 33,
+        "ce_read_address": "0xB7D49F08",
+        "ce_bytes": "00 00 04 42 08 00 00 00 04 6A 54 00 96 A7 0A 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D49EE8",
+        "window65": "08 00 0D 00 00 00 6C 75 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04 42 08 00 00 00 04 6A 54 00 96 A7 0A 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "魔抗与 Live Client Data API 的 magicResist 交叉核对；旧 0x2098 读到 0"
+      },
+      {
+        "id": "structs.GameObject.MoveSpeed",
+        "offset": "0x2168",
+        "type": "float",
+        "value": 330.0,
+        "expected": 330,
+        "ce_read_address": "0xB7D49FA8",
+        "ce_bytes": "00 00 A5 43 19 00 00 00 20 00 00 00 00 00 00 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D49F88",
+        "window65": "08 00 20 20 01 00 00 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A5 43 19 00 00 00 20 00 00 00 00 00 00 00 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "移动速度与 Live Client Data API 的 moveSpeed 交叉核对；旧 0x2188 读到 0"
+      },
+      {
+        "id": "structs.GameObject.oAttackRange",
+        "offset": "0x21B8",
+        "type": "float",
+        "value": 575.0,
+        "expected": 575,
+        "ce_read_address": "0xB7D49FF8",
+        "ce_bytes": "00 C0 0F 44 0B 00 00 00 04 00 0D 00 00 00 20 20 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D49FD8",
+        "window65": "00 A9 D8 98 D7 75 24 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C0 0F 44 0B 00 00 00 04 00 0D 00 00 00 20 20 50 78 51 26 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "攻击距离与 Live Client Data API 的 attackRange 交叉核对"
+      },
+      {
+        "id": "structs.GameObject.oCharacterName",
+        "offset": "0x41D0",
+        "type": "string",
+        "value": "Varus",
+        "expected": "Varus",
+        "ce_read_address": "0xB7D4C010",
+        "ce_bytes": "56 61 72 75 73 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00 00 00 00 00 0F 00 00 00 00 00 00 00",
+        "window_start": "0xB7D4BFF0",
+        "window65": "00 00 00 00 00 00 00 00 F0 75 58 26 00 00 00 00 40 D8 55 26 00 00 00 00 11 00 00 00 13 00 00 00 56 61 72 75 73 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00 00 00 00 00 0F 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "读取 MSVC 字符串，长度 5、容量 15，英雄名与 Live Client Data API 的惩戒之箭对应"
+      },
+      {
+        "id": "structs.GameObject.oPosition",
+        "offset": "0x23C",
+        "type": "vec3",
+        "value": [
+          2274.0,
+          95.748077392578,
+          880.0
+        ],
+        "expected": null,
+        "ce_read_address": "0xB7D4807C",
+        "ce_bytes": "00 20 0E 45 04 7F BF 42 00 00 5C 44 40 B7 A2 41 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D4805C",
+        "window65": "FF 00 00 00 47 AC A0 D1 00 00 00 00 00 00 00 00 01 00 04 01 4E 6A B1 B1 96 01 00 01 02 01 00 00 00 20 0E 45 04 7F BF 42 00 00 5C 44 40 B7 A2 41 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "初步语义：单次快照及对象间合理性检查；未进行移动、对象创建销毁或网络事件实验",
+        "dynamic_experiment_performed": false,
+        "notes": "读取到地图内坐标；与旧字段访问指令位移一致，未进行移动实验"
+      },
+      {
+        "id": "structs.GameObject.oIndex",
+        "offset": "0x20",
+        "type": "word",
+        "value": 1028,
+        "expected": 1028,
+        "ce_read_address": "0xB7D47E60",
+        "ce_bytes": "04 04 01 00 00 00 00 00 06 FF F9 F8 F9 01 00 01 03 72 00 8D 8D 00 01 00 01 02 EE 00 11 00 00 01",
+        "window_start": "0xB7D47E40",
+        "window65": "88 AB A2 41 01 00 00 00 E0 B6 A2 41 01 00 00 00 F0 B6 A2 41 01 00 00 00 08 B7 A2 41 01 00 00 00 04 04 01 00 00 00 00 00 06 FF F9 F8 F9 01 00 01 03 72 00 8D 8D 00 01 00 01 02 EE 00 11 00 00 01 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "初步语义：单次快照及对象间合理性检查；未进行移动、对象创建销毁或网络事件实验",
+        "dynamic_experiment_performed": false,
+        "notes": "英雄列表三个对象分别为 1028、283、1325；保留原索引字段语义，未进行创建销毁实验"
+      },
+      {
+        "id": "structs.GameObject.oNetworkID",
+        "offset": "0xBC",
+        "type": "dword",
+        "value": 1073741998,
+        "expected": 1073741998,
+        "ce_read_address": "0xB7D47EFC",
+        "ce_bytes": "AE 00 00 40 70 CF A1 41 01 00 00 00 00 00 00 00 00 00 00 00 00 FF 01 65 00 00 00 00 63 E8 09 45",
+        "window_start": "0xB7D47EDC",
+        "window65": "00 00 00 00 A1 BB A0 D1 A2 BB A0 D1 A7 BB A0 D1 01 00 04 03 EC 00 13 00 19 01 00 01 01 00 00 00 AE 00 00 40 70 CF A1 41 01 00 00 00 00 00 00 00 00 00 00 00 00 FF 01 65 00 00 00 00 63 E8 09 45 B4",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "初步语义：单次快照及对象间合理性检查；未进行移动、对象创建销毁或网络事件实验",
+        "dynamic_experiment_performed": false,
+        "notes": "英雄对象三个网络编号均以 0x40000000 开头且不同；旧签名的 +0xCC 与本字段不一致，已移除旧签名；仅初步语义，未进行网络事件或对象生命周期动态实验"
+      },
+      {
+        "id": "structs.GameObject.oTeamID",
+        "offset": "0x239",
+        "type": "byte",
+        "value": 1,
+        "expected": 1,
+        "ce_read_address": "0xB7D48079",
+        "ce_bytes": "01 00 00 00 20 0E 45 04 7F BF 42 00 00 5C 44 40 B7 A2 41 01 00 00 00 00 00 00 00 00 00 00 00 00",
+        "window_start": "0xB7D48059",
+        "window65": "53 5F 2E FF 00 00 00 47 AC A0 D1 00 00 00 00 00 00 00 00 01 00 04 01 4E 6A B1 B1 96 01 00 01 02 01 00 00 00 20 0E 45 04 7F BF 42 00 00 5C 44 40 B7 A2 41 01 00 00 00 00 00 00 00 00 00 00 00 00 00",
+        "bytes_verified": true,
+        "semantic_verified": true,
+        "semantic_scope": "单次对象快照与 Live Client Data API 或同列表对象交叉；未进行动态实验",
+        "dynamic_experiment_performed": false,
+        "notes": "三英雄对象阵营值为 1、2、2，与 API ORDER、CHAOS、CHAOS 对应；此处不是旧说明的 100/200"
+      }
+    ]
+  },
+  "semantic_globals": {
+    "source": "已有 CE MCP 快照与 Live Client Data API 观察的整理",
+    "checks": [
+      {
+        "id": "globals.LocalPlayer",
+        "rva": "0x1F2BCE0",
+        "candidate_rva": "0x1F2BCE0",
+        "semantic_verified": true,
+        "bytes_verified": true,
+        "value": "0xB7D47E40",
+        "semantic_scope": "本局 CE 对象/列表/游戏时长快照与 Live Client Data API 交叉；未验证其他局或其他版本",
+        "dynamic_experiment_performed": false,
+        "observed_at": "2026-10-19T09:43:07Z",
+        "notes": "本地玩家槽指向 0xB7D47E40；同一对象的 Varus/生命值/法力值/护甲/魔抗/移速/攻击距离与 API 和字段快照交叉一致。",
+        "ce_read_address": "0x141F2BCE0"
+      },
+      {
+        "id": "globals.HeroManager",
+        "rva": "0x1EE9370",
+        "candidate_rva": "0x1EE9370",
+        "semantic_verified": true,
+        "bytes_verified": true,
+        "value": {
+          "count": 3,
+          "layout": {
+            "count": "0x10",
+            "array": "0x8",
+            "stride": 8
+          }
+        },
+        "semantic_scope": "本局 CE 对象/列表/游戏时长快照与 Live Client Data API 交叉；未验证其他局或其他版本",
+        "dynamic_experiment_performed": false,
+        "observed_at": "2026-10-19T09:43:07Z",
+        "notes": "CE 读取管理器列表数量 3，与 Live Client Data API 的 3 名英雄一致；列表包含同一本地玩家对象，其余两个训练对象生命值 1000/1000。",
+        "ce_read_address": "0x141EE9370"
+      },
+      {
+        "id": "globals.GameTime",
+        "rva": "0x1EFA788",
+        "candidate_rva": "0x1EFA788",
+        "semantic_verified": true,
+        "bytes_verified": true,
+        "value": 977.22009277344,
+        "semantic_scope": "本局 CE 对象/列表/游戏时长快照与 Live Client Data API 交叉；未验证其他局或其他版本",
+        "dynamic_experiment_performed": false,
+        "observed_at": "2026-10-19T09:43:07Z",
+        "notes": "CE 游戏时长与更早的 Live Client Data API 时长差约 54 秒，与两次记录的时间间隔相符；为同局快照时序交叉。",
+        "ce_read_address": "0x141EFA788"
+      }
+    ],
+    "game_time_crosscheck": {
+      "ce_observed_at": "2026-10-19T09:43:07Z",
+      "api_observed_at": "2026-10-19T17:42:13.1168436+08:00",
+      "ce_game_time": 977.22009277344,
+      "api_game_time": 923.2150268554688,
+      "wall_time_delta_seconds": 53.883157,
+      "game_time_delta_seconds": 54.00506591797125,
+      "difference_seconds": 0.12190891797125403,
+      "note": "两次读取非原子同步；约 0.12 秒差异包含调用耗时与 CE 秒级记录精度。"
+    }
+  },
+  "live_client_observation": {
+    "source": "Live Client Data API",
+    "observed_at": "2026-10-19T17:42:13.1168436+08:00",
+    "champion_stats": {
+      "abilityHaste": 0.0,
+      "abilityPower": 0.0,
+      "armor": 24.0,
+      "armorPenetrationFlat": 0.0,
+      "armorPenetrationPercent": 1.0,
+      "attackDamage": 64.4000015258789,
+      "attackRange": 575.0,
+      "attackSpeed": 0.7435399889945984,
+      "bonusArmorPenetrationPercent": 1.0,
+      "bonusMagicPenetrationPercent": 1.0,
+      "critChance": 0.0,
+      "critDamage": 200.0,
+      "currentHealth": 665.0,
+      "healShieldPower": 0.0,
+      "healthRegenRate": 0.699999988079071,
+      "lifeSteal": 0.0,
+      "magicLethality": 0.0,
+      "magicPenetrationFlat": 0.0,
+      "magicPenetrationPercent": 1.0,
+      "magicResist": 33.0,
+      "maxHealth": 665.0,
+      "moveSpeed": 330.0,
+      "omnivamp": 0.0,
+      "physicalLethality": 0.0,
+      "physicalVamp": 0.0,
+      "resourceMax": 320.0,
+      "resourceRegenRate": 1.600000023841858,
+      "resourceType": "MANA",
+      "resourceValue": 320.0,
+      "spellVamp": 0.0,
+      "tenacity": 5.0
+    },
+    "level": 1,
+    "game_time": 923.2150268554688,
+    "game_mode": "PRACTICETOOL",
+    "teams": [
+      {
+        "championName": "惩戒之箭",
+        "team": "ORDER",
+        "isBot": false
+      },
+      {
+        "championName": "",
+        "team": "CHAOS",
+        "isBot": true
+      },
+      {
+        "championName": "",
+        "team": "CHAOS",
+        "isBot": true
+      }
+    ]
+  },
+  "name_accessor_ce_evidence": {
+    "rva": "0x29CC80",
+    "instruction": {
+      "rva": "0x29CC80",
+      "size": 7,
+      "bytes": "48 8D 81 D0 41 00 00",
+      "mnemonic": "lea",
+      "operands": "rax, [rcx + 0x41d0]",
+      "memory_operands": [
+        {
+          "base": "rcx",
+          "index": null,
+          "scale": 1,
+          "displacement": 16848,
+          "size": 8
+        }
+      ]
+    },
+    "instructions": [
+      {
+        "rva": "0x29CC80",
+        "size": 7,
+        "bytes": "48 8D 81 D0 41 00 00",
+        "mnemonic": "lea",
+        "operands": "rax, [rcx + 0x41d0]",
+        "memory_operands": [
+          {
+            "base": "rcx",
+            "index": null,
+            "scale": 1,
+            "displacement": 16848,
+            "size": 8
+          }
+        ]
+      },
+      {
+        "rva": "0x29CC87",
+        "size": 5,
+        "bytes": "48 83 78 18 0F",
+        "mnemonic": "cmp",
+        "operands": "qword ptr [rax + 0x18], 0xf",
+        "memory_operands": [
+          {
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "displacement": 24,
+            "size": 8
+          }
+        ],
+        "immediate_operands": [
+          {
+            "value": 15,
+            "hex": "0xF",
+            "size": 8
+          }
+        ]
+      },
+      {
+        "rva": "0x29CC8C",
+        "size": 2,
+        "bytes": "76 03",
+        "mnemonic": "jbe",
+        "operands": "0x14029cc91",
+        "immediate_operands": [
+          {
+            "value": 5371448465,
+            "hex": "0x14029CC91",
+            "size": 8
+          }
+        ]
+      },
+      {
+        "rva": "0x29CC8E",
+        "size": 3,
+        "bytes": "48 8B 00",
+        "mnemonic": "mov",
+        "operands": "rax, qword ptr [rax]",
+        "memory_operands": [
+          {
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "displacement": 0,
+            "size": 8
+          }
+        ]
+      },
+      {
+        "rva": "0x29CC91",
+        "size": 1,
+        "bytes": "C3",
+        "mnemonic": "ret",
+        "operands": ""
+      }
+    ],
+    "ce_disassembly": [
+      "lea rax,[rcx+000041D0]",
+      "cmp qword ptr [rax+18],0F",
+      "jna 14029CC91",
+      "mov rax,[rax]",
+      "ret"
+    ],
+    "aob": {
+      "rva": "0x29CC80",
+      "pattern": "48 8D 81 D0 41 00 00 48 83 78 18 0F 76 03 48 8B 00 C3",
+      "length": 18,
+      "match_count": 1,
+      "unique": true,
+      "masking": "叶函数完整代码；对象成员位移固定；短分支为函数内跳转。"
+    },
+    "ce_bytes_verified": true,
+    "ce_aob_scan": {
+      "aob": "48 8D 81 D0 41 00 00 48 83 78 18 0F 76 03 48 8B 00 C3",
+      "module": "League of Legends.exe",
+      "protection": "-C+X",
+      "address": "0x14029CC80",
+      "rva": "0x29CC80",
+      "found": true
+    },
+    "resolution_rule": "首条 lea 的 rcx 对象位移 0x41D0；随后检查 +0x18 容量并按 MSVC SSO 读取字符指针。"
+  },
+  "function_boundary_review": {
+    "summary": {
+      "reviewed": 37,
+      "entry_corrections": 1,
+      "boundary_status_counts": {
+        "主 RUNTIME_FUNCTION 起点": 30,
+        "无栈短叶函数入口，前后 CC 分隔且存在返回控制流": 5,
+        "无栈叶包装入口，尾跳到另一函数": 1,
+        "需修正：候选是链式展开记录内部起点": 1
+      },
+      "signature_match_role_counts": {
+        "函数入口": 31,
+        "直接调用或跳转引用点": 4,
+        "函数内部签名指令": 2
+      }
+    },
+    "findings": [
+      {
+        "id": "functions.DistanceSq",
+        "name": "DistanceSq",
+        "match_rva": "0x227480",
+        "candidate_rva": "0x227480",
+        "reviewed_entry_rva": "0x227480",
+        "candidate_is_correct_entry": true,
+        "boundary_status": "无栈短叶函数入口，前后 CC 分隔且存在返回控制流",
+        "signature_match_role": "函数入口",
+        "signature_match_instruction": {
+          "rva": "0x227480",
+          "size": 8,
+          "bytes": "F3 0F 10 81 5C 02 00 00",
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [rcx + 0x25c]",
+          "memory_operands": [
+            {
+              "base": "rcx",
+              "index": null,
+              "scale": 1,
+              "displacement": 604,
+              "size": 4
+            }
+          ]
+        },
+        "unwind_chain": [],
+        "entry_before16": "C1 C3 CC CC CC CC CC CC CC CC CC CC CC CC CC CC",
+        "entry_instructions": [
+          {
+            "rva": "0x227480",
+            "size": 8,
+            "bytes": "F3 0F 10 81 5C 02 00 00",
+            "mnemonic": "movss",
+            "operands": "xmm0, dword ptr [rcx + 0x25c]",
+            "memory_operands": [
+              {
+                "base": "rcx",
+                "index": null,
+                "scale": 1,
+                "displacement": 604,
+                "size": 4
+              }
+            ]
+          },
+          {
+            "rva": "0x227488",
+            "size": 8,
+            "bytes": "F3 0F 10 89 BC 01 00 00",
+            "mnemonic": "movss",
+            "operands": "xmm1, dword ptr [rcx + 0x1bc]",
+            "memory_operands": [
+              {
+                "base": "rcx",
+                "index": null,
+                "scale": 1,
+                "displacement": 444,
+                "size": 4
+              }
+            ]
+          },
+          {
+            "rva": "0x227490",
+            "size": 8,
+            "bytes": "F3 0F 58 81 B8 01 00 00",
+            "mnemonic": "addss",
+            "operands": "xmm0, dword ptr [rcx + 0x1b8]",
+            "memory_operands": [
+              {
+                "base": "rcx",
+                "index": null,
+                "scale": 1,
+                "displacement": 440,
+                "size": 4
+              }
+            ]
+          },
+          {
+            "rva": "0x227498",
+            "size": 8,
+            "bytes": "F3 0F 58 0D 3C A5 7F 01",
+            "mnemonic": "addss",
+            "operands": "xmm1, dword ptr [rip + 0x17fa53c]",
+            "memory_operands": [
+              {
+                "base": "rip",
+                "index": null,
+                "scale": 1,
+                "displacement": 25142588,
+                "size": 4,
+                "target_rva": "0x1A219DC",
+                "target_section": ".ace"
+              }
+            ]
+          },
+          {
+            "rva": "0x2274A0",
+            "size": 4,
+            "bytes": "F3 0F 59 C1",
+            "mnemonic": "mulss",
+            "operands": "xmm0, xmm1"
+          },
+          {
+            "rva": "0x2274A4",
+            "size": 1,
+            "bytes": "C3",
+            "mnemonic": "ret",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274A5",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274A6",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274A7",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274A8",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274A9",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274AA",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274AB",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274AC",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274AD",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274AE",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274AF",
+            "size": 1,
+            "bytes": "CC",
+            "mnemonic": "int3",
+            "operands": ""
+          },
+          {
+            "rva": "0x2274B0",
+            "size": 8,
+            "bytes": "F3 0F 10 99 AC 01 00 00",
+            "mnemonic": "movss",
+            "operands": "xmm3, dword ptr [rcx + 0x1ac]",
+            "memory_operands": [
+              {
+                "base": "rcx",
+                "index": null,
+                "scale": 1,
+                "displacement": 428,
+                "size": 4
+              }
+            ]
+          },
+          {
+            "rva": "0x2274B8",
+            "size": 8,
+            "bytes": "F3 0F 58 1D 1C A5 7F 01",
+            "mnemonic": "addss",
+            "operands": "xmm3, dword ptr [rip + 0x17fa51c]",
+            "memory_operands": [
+              {
+                "base": "rip",
+                "index": null,
+                "scale": 1,
+                "displacement": 25142556,
+                "size": 4,
+                "target_rva": "0x1A219DC",
+                "target_section": ".ace"
+              }
+            ]
+          },
+          {
+            "rva": "0x2274C0",
+            "size": 8,
+            "bytes": "F3 0F 10 A1 4C 02 00 00",
+            "mnemonic": "movss",
+            "operands": "xmm4, dword ptr [rcx + 0x24c]",
+            "memory_operands": [
+              {
+                "base": "rcx",
+                "index": null,
+                "scale": 1,
+                "displacement": 588,
+                "size": 4
+              }
+            ]
+          }
+        ],
+        "semantic_verified_by_this_review": false,
+        "semantic_warning": "入口有效，但计算是 ([rcx+0x25C]+[rcx+0x1B8])*([rcx+0x1BC]+常量)，缺少两点坐标差和平方求和，不支持 DistanceSq 命名。仅可当作旧名称的签名对应项。"
+      },
+      {
+        "id": "functions.fieldOfView",
+        "name": "fieldOfView",
+        "match_rva": "0x6F4B75",
+        "candidate_rva": "0x6F3841",
+        "reviewed_entry_rva": "0x6F3810",
+        "candidate_is_correct_entry": false,
+        "boundary_status": "需修正：候选是链式展开记录内部起点",
+        "signature_match_role": "函数内部签名指令",
+        "signature_match_instruction": {
+          "rva": "0x6F4B75",
+          "size": 7,
+          "bytes": "48 8D 15 7C 23 39 01",
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x139237c]",
+          "memory_operands": [
+            {
+              "base": "rip",
+              "index": null,
+              "scale": 1,
+              "displacement": 20521852,
+              "size": 8,
+              "target_rva": "0x1A86EF8",
+              "target_section": ".ace"
+            }
+          ]
+        },
+        "unwind_chain": [
+          {
+            "begin_rva": "0x6F3841",
+            "end_rva": "0x6F65A2",
+            "unwind_rva": "0x1D42B60",
+            "version": 1,
+            "flags": 4,
+            "prolog_size": 40,
+            "unwind_code_count": 10,
+            "chained": true
+          },
+          {
+            "begin_rva": "0x6F3839",
+            "end_rva": "0x6F3841",
+            "unwind_rva": "0x1D42B4C",
+            "version": 1,
+            "flags": 4,
+            "prolog_size": 8,
+            "unwind_code_count": 2,
+            "chained": true
+          },
+          {
+            "begin_rva": "0x6F3810",
+            "end_rva": "0x6F3839",
+            "unwind_rva": "0x1D42B40",
+            "version": 1,
+            "flags": 0,
+            "prolog_size": 18,
+            "unwind_code_count": 4,
+            "chained": false
+          }
+        ],
+        "entry_before16": "CC CC CC CC CC CC CC CC CC CC CC CC CC CC CC CC",
+        "entry_instructions": [
+          {
+            "rva": "0x6F3810",
+            "size": 2,
+            "bytes": "40 55",
+            "mnemonic": "push",
+            "operands": "rbp"
+          },
+          {
+            "rva": "0x6F3812",
+            "size": 1,
+            "bytes": "57",
+            "mnemonic": "push",
+            "operands": "rdi"
+          },
+          {
+            "rva": "0x6F3813",
+            "size": 8,
+            "bytes": "48 8D AC 24 38 FC FF FF",
+            "mnemonic": "lea",
+            "operands": "rbp, [rsp - 0x3c8]",
+            "memory_operands": [
+              {
+                "base": "rsp",
+                "index": null,
+                "scale": 1,
+                "displacement": -968,
+                "size": 8
+              }
+            ]
+          },
+          {
+            "rva": "0x6F381B",
+            "size": 7,
+            "bytes": "48 81 EC C8 04 00 00",
+            "mnemonic": "sub",
+            "operands": "rsp, 0x4c8",
+            "immediate_operands": [
+              {
+                "value": 1224,
+                "hex": "0x4C8",
+                "size": 8
+              }
+            ]
+          },
+          {
+            "rva": "0x6F3822",
+            "size": 3,
+            "bytes": "48 8B F9",
+            "mnemonic": "mov",
+            "operands": "rdi, rcx"
+          },
+          {
+            "rva": "0x6F3825",
+            "size": 7,
+            "bytes": "48 8B 0D F4 5B 7F 01",
+            "mnemonic": "mov",
+            "operands": "rcx, qword ptr [rip + 0x17f5bf4]",
+            "memory_operands": [
+              {
+                "base": "rip",
+                "index": null,
+                "scale": 1,
+                "displacement": 25123828,
+                "size": 8,
+                "target_rva": "0x1EE9420",
+                "target_section": ".ace"
+              }
+            ]
+          },
+          {
+            "rva": "0x6F382C",
+            "size": 5,
+            "bytes": "E8 2F 8B F0 FF",
+            "mnemonic": "call",
+            "operands": "0x1405fc360",
+            "immediate_operands": [
+              {
+                "value": 5374985056,
+                "hex": "0x1405FC360",
+                "size": 8
+              }
+            ]
+          },
+          {
+            "rva": "0x6F3831",
+            "size": 2,
+            "bytes": "84 C0",
+            "mnemonic": "test",
+            "operands": "al, al"
+          },
+          {
+            "rva": "0x6F3833",
+            "size": 6,
+            "bytes": "0F 84 2B 47 00 00",
+            "mnemonic": "je",
+            "operands": "0x1406f7f64",
+            "immediate_operands": [
+              {
+                "value": 5376016228,
+                "hex": "0x1406F7F64",
+                "size": 8
+              }
+            ]
+          },
+          {
+            "rva": "0x6F3839",
+            "size": 8,
+            "bytes": "48 89 B4 24 E8 04 00 00",
+            "mnemonic": "mov",
+            "operands": "qword ptr [rsp + 0x4e8], rsi",
+            "memory_operands": [
+              {
+                "base": "rsp",
+                "index": null,
+                "scale": 1,
+                "displacement": 1256,
+                "size": 8
+              }
+            ]
+          },
+          {
+            "rva": "0x6F3841",
+            "size": 8,
+            "bytes": "4C 89 A4 24 F0 04 00 00",
+            "mnemonic": "mov",
+            "operands": "qword ptr [rsp + 0x4f0], r12",
+            "memory_operands": [
+              {
+                "base": "rsp",
+                "index": null,
+                "scale": 1,
+                "displacement": 1264,
+                "size": 8
+              }
+            ]
+          },
+          {
+            "rva": "0x6F3849",
+            "size": 8,
+            "bytes": "4C 89 AC 24 C0 04 00 00",
+            "mnemonic": "mov",
+            "operands": "qword ptr [rsp + 0x4c0], r13",
+            "memory_operands": [
+              {
+                "base": "rsp",
+                "index": null,
+                "scale": 1,
+                "displacement": 1216,
+                "size": 8
+              }
+            ]
+          }
+        ],
+        "semantic_verified_by_this_review": false,
+        "correction_reason": "0x6F3841 的 UNWIND_INFO flags=4，链式指向 0x6F3839，再指向主入口 0x6F3810。0x6F3841 是 mov [rsp+0x4F0],r12，依赖此前建立的 0x4C8 栈帧，不能从该地址正常调用。",
+        "corrected_entry_aob": {
+          "rva": "0x6F3810",
+          "pattern": "40 55 57 48 8D AC 24 38 FC FF FF 48 81 EC C8 04 00 00 48 8B F9 48 8B 0D ?? ?? ?? ??",
+          "length": 28,
+          "match_count": 1,
+          "matches": [
+            "0x6F3810"
+          ],
+          "unique": true,
+          "masking": "已通配 RIP 相对位移、相对跳转/调用立即数、模块内绝对地址和 PE 重定位字节；其余字节保留。"
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "仅本局与本版本快照；未执行游戏函数。",
+    "13个字段属于快照交叉，索引/网络编号/位置只有初步语义，未做动态实验。",
+    "内存窗口是采样证据，不能保证跨局字节稳定。"
+  ],
+  "build_validation": {
+    "json_and_coverage": "通过，全部735个原输入项保留且只覆盖一次",
+    "aob_patterns_checked": 168,
+    "aob_scan": "所有保存的更新AOB命中数和引用位置与本映像一致",
+    "runtime_windows_checked": 13,
+    "cpp_header_compile": {
+      "status": "通过",
+      "toolchain": "Visual Studio Community 2026 MSVC x64",
+      "discovery": "常见安装路径检查后通过 vswhere 定位 VC.Tools.x86.x64",
+      "command": "cl /nologo /std:c++17 /W4 /WX /utf-8 /Zs compile_headers.cpp",
+      "exit_code": 0,
+      "scope": "共同包含两个生成头文件并以 static_assert 检查新偏移；只做语法编译，未运行进程读取或调用游戏函数"
+    },
+    "git_diff_check": "通过，未发现空白错误"
+  }
+}
