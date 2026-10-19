@@ -1,0 +1,49 @@
+<h1 align="center">League — Offset & Pattern Database</h1>
+
+# update: I am bussy with my own life my customers and this project is paused.
+
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Patch-26.20-blue?style=flat-square" alt="Patch" />
+  <img src="https://img.shields.io/badge/Arch-x64%20PE-lightgrey?style=flat-square" alt="Arch" />
+  <img src="https://img.shields.io/badge/Tool-IDA%20Pro%209.4-orange?style=flat-square" alt="Tool" />
+  <img src="https://img.shields.io/badge/Status-not_tested-yellow?style=flat-square" alt="Status" />
+</p>
+
+<p align="center">
+  <strong>Star For Support ⭐</strong><br>
+  RVA offsets, AOB patterns, and structure layouts manually reversed from the game client.
+</p>
+
+## Repository Layout
+
+```
+League-Offsets/
+├── src/
+│   ├── offsets.hpp            ← generated C++ header file for ready inclusion
+│   ├── offsets.json           ← JSON dump of resolved RVAs & member offsets
+│   └── quick_usage/           
+│       └── all_offsets.hpp    ← unified single header containing all C++ snippets & types
+```
+
+## Memory & Offset Architecture Tree
+
+<p align="center">
+  <img src="assets/offset_tree.png" alt="Memory & Offset Architecture Tree" width="100%" />
+</p>
+
+
+## Build Info
+
+| Field | Value |
+| ----- | ----- |
+| Patch | 26.20 (16.20.idk.rest.of.it) |
+| Timestamp | `6AC001AD` — Sat Sep 05 06:59:16 2026 UTC |
+| Imagebase | `7FF6B01A0000` |
+| Compiler | Visual C++ · x64 PE |
+
+---
+
+## Contact
+Discord — **swansizz**  
+Or open an [issue](../../issues) if a pattern is missing or broken.
